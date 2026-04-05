@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bezahlt Werden zum Scrollen</title>
+  <title>Zarabiaj na Scrollowaniu</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -137,7 +137,7 @@
 
     .headline {
       text-align: center;
-      font-size: 54px;
+      font-size: 50px;
       font-weight: 900;
       line-height: 1.0;
       margin-bottom: 18px;
@@ -200,7 +200,7 @@
       opacity: 0.5;
     }
     .stat-value {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--green);
       letter-spacing: -0.5px;
@@ -514,7 +514,7 @@
     .modal-btn:active { transform: scale(0.98); }
 
     @media (max-width: 400px) {
-      .headline { font-size: 44px; }
+      .headline { font-size: 40px; }
     }
   </style>
 </head>
@@ -529,37 +529,37 @@
     <!-- App Icon -->
     <div class="app-icon-wrap">
       <div class="app-icon">
-        <img src="https://i.imgur.com/1UmZT5o.png" alt="App Logo" />
+        <img src="https://i.imgur.com/1UmZT5o.png" alt="Logo Aplikacji" />
       </div>
     </div>
 
     <!-- Trending Badge -->
     <div class="trending-badge">
       <div class="trending-dot"></div>
-      Trending in Deutschland
+      Trendy w Polsce
     </div>
 
     <!-- Headline -->
     <div class="headline">
-      <span class="white">Bezahlt Werden<br></span>
-      <span class="green">zum Scrollen</span>
+      <span class="white">Zarabiaj<br></span>
+      <span class="green">na Scrollowaniu</span>
     </div>
 
     <p class="subtitle">
-      Echtes Geld für deine Bildschirmzeit.<br>
-      <strong>5 € einfach für die Anmeldung.</strong><br>
-      Sofortige PayPal-Auszahlung.
+      Prawdziwe pieniądze za Twój czas ekranowy.<br>
+      <strong>20 zł gratis przy rejestracji.</strong><br>
+      Natychmiastowa wypłata przez PayPal.
     </p>
 
     <!-- Stats -->
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-value">200–500 €+</div>
-        <div class="stat-label">Wöchentl. Verdienst</div>
+        <div class="stat-value">800–2000 zł+</div>
+        <div class="stat-label">Zarobki / Tydzień</div>
       </div>
       <div class="stat">
         <div class="stat-value">500K+</div>
-        <div class="stat-label">Mitglieder</div>
+        <div class="stat-label">Członków</div>
       </div>
       <div class="stat">
         <div class="stat-value">4.7★</div>
@@ -577,22 +577,22 @@
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Anmelden &amp; 21+ auswählen</h3>
-          <p>Scroll-Belohnungen sind nur für <strong>Mitglieder ab 21 Jahren</strong> verfügbar. Wähle dies bei der Anmeldung aus, um auf alles zugreifen zu können.</p>
+          <h3>Zarejestruj się i wybierz 21+</h3>
+          <p>Nagrody za scrollowanie są zarezerwowane dla <strong>członków w wieku 21+</strong>. Wybierz tę opcję przy rejestracji, aby odblokować wszystko.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>2 Aufgaben abschließen, um Scrollen zu aktivieren</h3>
-          <p>Ein schnelles Spiel oder eine Umfrage. Aktiviert <strong>Scroll-Einnahmen</strong> &amp; alle hochbezahlten Angebote. Du verdienst dabei sofort.</p>
+          <h3>Ukończ 2 oferty, aby aktywować scroll</h3>
+          <p>Szybka gra lub ankieta. Aktywuje <strong>zarobki ze scrollowania</strong> i wszystkie wysoko płatne oferty. Zarabiasz natychmiast.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Auszahlung erhalten</h3>
-          <p>Scrollen läuft im Hintergrund. Auszahlung per <strong>PayPal, Visa oder Krypto</strong>. Kein Mindestbetrag.</p>
+          <h3>Odbierz swoją wypłatę</h3>
+          <p>Scrollowanie działa w tle. Wypłać przez <strong>PayPal, Visa lub Kryptowaluty</strong>. Bez minimalnej kwoty wypłaty.</p>
         </div>
       </div>
     </div>
@@ -601,7 +601,7 @@
 
   <!-- Fixed CTA -->
   <div class="cta-wrapper">
-    <button class="cta-btn" onclick="openModal()">Jetzt Verdienen &nbsp;→</button>
+    <button class="cta-btn" onclick="openModal()">Zacznij Zarabiać &nbsp;→</button>
   </div>
 
   <!-- Modal -->
@@ -609,16 +609,16 @@
     <div class="modal-sheet" id="modalSheet">
       <div class="modal-handle"></div>
       <div class="modal-icon">🔓</div>
-      <div class="modal-tag">Bevor Du Beginnst</div>
-      <div class="modal-title">Wähle <span>21+</span> bei<br>der Anmeldung aus</div>
-      <p class="modal-desc">Dies schaltet die Scroll-Einnahmenfunktion und alle hochbezahlten Angebote auf Freecash frei.</p>
+      <div class="modal-tag">Zanim zaczniesz</div>
+      <div class="modal-title">Wybierz <span>21+</span><br>przy rejestracji</div>
+      <p class="modal-desc">To odblokowuje funkcję zarobków ze scrollowania i wszystkie oferty premium na Freecash.</p>
       <div class="modal-highlight">
         <div class="modal-highlight-icon">💸</div>
         <div class="modal-highlight-text">
-          <strong>Ohne die Auswahl von 21+</strong> verpasst du Scroll-Einnahmen und Premium-Angebote mit hoher Vergütung.
+          <strong>Bez wyboru 21+</strong> stracisz zarobki ze scrollowania i wysoko płatne oferty.
         </div>
       </div>
-      <button class="modal-btn" onclick="goToOffer()">Verstanden &nbsp;→</button>
+      <button class="modal-btn" onclick="goToOffer()">Rozumiem &nbsp;→</button>
     </div>
   </div>
 
@@ -648,13 +648,13 @@
     };
 
     const tickerData = [
-      { init: 'JM', name: 'Jonas M.', amount: '47,50 €', time: 'vor 2 Min.' },
-      { init: 'SR', name: 'Sophie R.', amount: '112,00 €', time: 'vor 5 Min.' },
-      { init: 'DK', name: 'David K.', amount: '23,75 €', time: 'vor 8 Min.' },
-      { init: 'AL', name: 'Anna L.', amount: '89,20 €', time: 'vor 11 Min.' },
-      { init: 'MR', name: 'Markus R.', amount: '310,00 €', time: 'vor 15 Min.' },
-      { init: 'TC', name: 'Tanja C.', amount: '56,40 €', time: 'vor 18 Min.' },
-      { init: 'BW', name: 'Benjamin W.', amount: '178,90 €', time: 'vor 21 Min.' },
+      { init: 'MK', name: 'Marek K.',      amount: '487 zł',   time: '2 min temu' },
+      { init: 'AN', name: 'Anna N.',        amount: '1 120 zł', time: '5 min temu' },
+      { init: 'PW', name: 'Piotr W.',       amount: '238 zł',   time: '8 min temu' },
+      { init: 'KZ', name: 'Katarzyna Z.',   amount: '892 zł',   time: '11 min temu' },
+      { init: 'TK', name: 'Tomasz K.',      amount: '1 950 zł', time: '15 min temu' },
+      { init: 'MN', name: 'Monika N.',      amount: '564 zł',   time: '18 min temu' },
+      { init: 'BW', name: 'Bartosz W.',     amount: '1 340 zł', time: '21 min temu' },
     ];
 
     function buildTicker() {
@@ -663,7 +663,7 @@
       track.innerHTML = doubled.map(d => `
         <div class="ticker-item">
           <div class="ticker-avatar">${d.init}</div>
-          <span>${d.name} hat ausgezahlt</span>
+          <span>${d.name} wypłacił</span>
           <span class="ticker-amount">${d.amount}</span>
           <span style="color:#334a33;font-size:11px">${d.time}</span>
         </div>
@@ -683,7 +683,7 @@
     
     // Redirect to offer with params + browser break
     function goToOffer() {
-      const baseUrl = 'https://rainawards.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpLWIiLCJ1IjoiNjgxZTE1ODE1ZTM2NWM2NDhjNGQwNzk1IiwidHMiOjE3NzUyNzc1OTk5ODd9?s1=hope-car-one';
+      const baseUrl = 'https://rainawards.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpLWIiLCJ1IjoiNjgxZTE1ODE1ZTM2NWM2NDhjNGQwNzk1IiwidHMiOjE3NzUzNDk1MDY3MDZ9?s1=jenn-car-pol-one';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
     }
