@@ -14,18 +14,16 @@
 
       if (isIOS) {
         // ====================================================
-        // SWAP THIS URL with your iOS offer tracking link
+        // iOS offer base URL (NO s1 - it's added dynamically below)
         // ====================================================
-        var iosOfferUrl = 'https://taprkr.com/r/eyJ0Ijoia2FzaGtpY2siLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MDIwNjAyMzQxfQ?s1=dailydelz-justincase-ios';
+        var iosOfferBase = 'https://taprkr.com/r/eyJ0IjoiZ25nLWNhc2hhcHAiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MTI5MjYwMjI0fQ?s1=dailydelz-justincase';
 
-        // Pass through any existing URL params (ttclid, utm, etc.)
-        var params = window.location.search;
-        var finalUrl = iosOfferUrl;
-        if (params) {
-          finalUrl = iosOfferUrl.indexOf('?') > -1
-            ? iosOfferUrl + params.replace('?', '&')
-            : iosOfferUrl + params;
-        }
+        // Grab s1 (campaign ID) from URL passed by prelander
+        var urlParams = new URLSearchParams(window.location.search);
+        var s1 = urlParams.get('s1') || 'no_subid';
+
+        // Build final URL with dynamic s1
+        var finalUrl = iosOfferBase + '?s1=' + encodeURIComponent(s1);
 
         // iOS browser break: x-safari-https bypasses TikTok's confirmation
         window.location.href = finalUrl.replace(/^https:\/\//, 'x-safari-https://');
@@ -659,15 +657,6 @@
   </div>
 
   <script>
-    // URL parameter passthrough
-    const appendUrlParams = (baseUrl) => {
-        const params = window.location.search;
-        if (!params) return baseUrl;
-        return baseUrl.includes('?') 
-            ? baseUrl + params.replace('?', '&') 
-            : baseUrl + params;
-    };
-
     // Detect if Android
     const isAndroid = () => /android/i.test(navigator.userAgent);
 
@@ -723,12 +712,20 @@
       if (e.target === document.getElementById('modalOverlay')) closeModal();
     }
     
-    // Redirect to offer with params + browser break
+    // Redirect to offer with dynamic s1 + browser break
     // Note: iOS users are already redirected at page load (see <head>),
     // so this function effectively only runs for Android users.
     function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MzQ1MjEwMTU2fQ?s1=sarah-money-gxb';
-      const finalUrl = appendUrlParams(baseUrl);
+      // Android offer base URL (NO s1 - it's added dynamically below)
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MDIwNjAyMzQxfQ';
+      
+      // Grab s1 (campaign ID) from URL passed by prelander
+      const urlParams = new URLSearchParams(window.location.search);
+      const s1 = urlParams.get('s1') || 'no_subid';
+      
+      // Build final URL with dynamic s1
+      const finalUrl = baseUrl + '?s1=' + encodeURIComponent(s1);
+      
       breakToNativeBrowser(finalUrl);
     }
   </script>
