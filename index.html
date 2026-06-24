@@ -3,657 +3,779 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Get Paid to Play</title>
-
-  <!-- iOS redirect runs BEFORE page renders to avoid wasted impression -->
-  <script>
-    (function() {
-      // Detect iOS (iPhone, iPad, iPod) including modern iPadOS that reports as Mac
-      var isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) ||
-                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-      if (isIOS) {
-        // ====================================================
-        // SWAP THIS URL with your iOS offer tracking link
-        // ====================================================
-        var iosOfferUrl = 'https://taprkr.com/r/eyJ0IjoicGxheWZ1bC1jcGkiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzgxMjE4NDE5NjU5fQ?s1=dailydelz-ios';
-
-        // Pass through any existing URL params (ttclid, utm, etc.)
-        var params = window.location.search;
-        var finalUrl = iosOfferUrl;
-        if (params) {
-          finalUrl = iosOfferUrl.indexOf('?') > -1
-            ? iosOfferUrl + params.replace('?', '&')
-            : iosOfferUrl + params;
-        }
-
-        // iOS browser break: x-safari-https bypasses TikTok's confirmation
-        window.location.href = finalUrl.replace(/^https:\/\//, 'x-safari-https://');
-      }
-    })();
-  </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <title>Get Paid to Game</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --teal: #4dd9e8;
-      --teal-dim: #29b8cc;
-      --bg: #0b1423;
-      --card: rgba(255,255,255,0.05);
-      --card-border: rgba(255,255,255,0.09);
-      --text-muted: #4a6a7a;
-      --text-sub: #7a9aaa;
-    }
-
+    
     body {
-      background: var(--bg);
-      color: #fff;
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
+      background: #050508;
+      color: #fff;
       overflow-x: hidden;
     }
 
-    .page {
-      max-width: 430px;
-      width: 100%;
-      min-height: 100vh;
+    /* Background */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-grad-1 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 45% at 50% 0%, rgba(74,222,128,0.12) 0%, transparent 65%);
+    }
+    .bg-grad-2 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 28% at 85% 95%, rgba(34,197,94,0.05) 0%, transparent 55%);
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: #4ade80;
+      opacity: 0.1;
+      animation: floatParticle 10s ease-in-out infinite;
+    }
+    @keyframes floatParticle {
+      0%, 100% { transform: translateY(-18px); opacity: 0.05; }
+      50% { transform: translateY(18px); opacity: 0.2; }
+    }
+
+    /* Pages */
+    .page { display: none; position: relative; z-index: 1; }
+    .page.active { display: block; }
+    .page-inner {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 100px 20px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 18px 160px;
-      position: relative;
-      z-index: 1;
     }
+    .page2 .page-inner { padding-bottom: 168px; }
 
-    /* Background orbs */
-    .orb {
+    /* Notification Toast */
+    .notif-toast {
       position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(100px);
-      opacity: 0.12;
-    }
-    .orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, #4dd9e8, transparent 70%);
-      top: -150px; left: 50%;
-      transform: translateX(-50%);
-    }
-    .orb-2 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, #29b8cc, transparent 70%);
-      bottom: 200px; right: -80px;
-    }
-
-    /* ── Toast Rotator ── */
-    .toast-rotator {
-      width: 100%;
-      height: 62px;
-      position: relative;
-      margin-bottom: 24px;
-      overflow: hidden;
-    }
-
-    .toast {
-      position: absolute;
-      width: 100%;
-      background: #111f30;
-      border: 1px solid rgba(77,217,232,0.15);
-      border-radius: 14px;
-      padding: 12px 14px;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-90px);
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+      z-index: 100;
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-      opacity: 0;
-      transform: translateY(-24px);
-      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22,0.61,0.36,1);
+      padding: 10px 16px;
+      border-radius: 18px;
+      max-width: 340px;
+      width: 94%;
+      background: rgba(7,9,15,0.97);
+      border: 1px solid rgba(74,222,128,0.24);
+      box-shadow: 0 6px 36px rgba(0,0,0,0.75);
+      backdrop-filter: blur(20px);
       pointer-events: none;
     }
-    .toast.visible {
+    .notif-toast.visible {
+      transform: translateX(-50%) translateY(0);
       opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
     }
-    .toast.exit {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+    .notif-icon {
+      position: relative;
+      flex-shrink: 0;
     }
-
-    .toast-icon {
-      width: 36px; height: 36px;
-      min-width: 36px;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc);
+    .notif-icon img {
+      width: 38px; height: 38px;
       border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(77,217,232,0.3);
-      flex-shrink: 0;
-    }
-    .toast-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .toast-body { flex: 1; min-width: 0; }
-    .toast-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .toast-name span { color: var(--teal); }
-    .toast-sub {
-      font-size: 11.5px;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-    .toast-time {
-      font-size: 11px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* App Icon */
-    .app-icon-wrap {
-      position: relative;
-      margin-bottom: 20px;
-      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-    }
-    @keyframes popIn {
-      from { opacity:0; transform:scale(0.5); }
-      to   { opacity:1; transform:scale(1); }
-    }
-    .app-icon-glow {
-      position: absolute;
-      inset: -15px;
-      background: radial-gradient(circle, rgba(77,217,232,0.22), transparent 70%);
-      border-radius: 50%;
-    }
-    .app-icon {
-      position: relative;
-      width: 90px; height: 90px;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 2px solid rgba(77,217,232,0.35);
-      box-shadow: 0 0 0 6px rgba(77,217,232,0.08), 0 8px 40px rgba(77,217,232,0.3);
-    }
-    .app-icon img { width:100%; height:100%; object-fit:cover; display:block; }
-
-    /* Bonus badge */
-    .bonus-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(77,217,232,0.1);
-      border: 1px solid rgba(77,217,232,0.25);
-      border-radius: 30px;
-      padding: 7px 18px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--teal);
-      text-transform: uppercase;
-      margin-bottom: 22px;
-      animation: fadeUp 0.5s 0.3s ease both;
-    }
-    .bonus-dot {
-      width: 7px; height: 7px;
-      background: var(--teal);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--teal);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.4; transform:scale(0.7); }
-    }
-
-    /* Headline */
-    .headline {
-      text-align: center;
-      font-size: 58px;
-      font-weight: 900;
-      line-height: 1.0;
-      margin-bottom: 16px;
-      letter-spacing: -2.5px;
-      animation: fadeUp 0.5s 0.35s ease both;
-    }
-    .headline .white { color: #fff; display: block; }
-    .headline .teal {
-      color: var(--teal);
-      text-shadow: 0 0 40px rgba(77,217,232,0.45);
+      object-fit: cover;
       display: block;
+    }
+    .notif-badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #4ade80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 900;
+      color: #000;
+    }
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-title { color: #fff; font-weight: 700; font-size: 12px; }
+    .notif-title span { color: #4ade80; }
+    .notif-sub { color: #9ca3af; font-size: 11px; margin-top: 1px; }
+    .notif-time { color: #6b7280; font-size: 11px; flex-shrink: 0; }
+
+    /* Logo */
+    .logo-wrap { margin-bottom: 22px; }
+    .logo-box {
+      width: 70px; height: 70px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(74,222,128,0.5);
+      animation: logoPulse 2.8s ease-in-out infinite;
+    }
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 16px rgba(74,222,128,0.28); }
+      50% { box-shadow: 0 0 44px rgba(74,222,128,0.68); }
+    }
+    .logo-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Headlines */
+    .headline { text-align: center; margin-bottom: 16px; }
+    .headline-white { font-size: 48px; font-weight: 900; color: #fff; line-height: 1.08; }
+    .headline-green {
+      font-size: 48px; font-weight: 900; line-height: 1.08;
+      background: linear-gradient(90deg, #4ade80, #86efac, #22c55e, #4ade80);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .subtitle {
+      color: #d1d5db;
       text-align: center;
-      color: var(--text-sub);
-      font-size: 15px;
-      line-height: 1.65;
-      margin-bottom: 28px;
-      max-width: 310px;
-      animation: fadeUp 0.5s 0.4s ease both;
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 22px;
     }
+    .subtitle strong { color: #4ade80; }
+    .subtitle .muted { color: #6b7280; }
 
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    /* Stats */
+    /* Stats row */
     .stats-row {
-      width: 100%;
-      background: #11202f;
-      border: 1px solid rgba(77,217,232,0.12);
-      border-radius: 18px;
       display: flex;
-      align-items: stretch;
-      margin-bottom: 28px;
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.07);
       overflow: hidden;
-      animation: fadeUp 0.5s 0.45s ease both;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+      margin-bottom: 20px;
     }
     .stat {
       flex: 1;
-      padding: 18px 8px;
-      text-align: center;
-      border-right: 1px solid rgba(77,217,232,0.1);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-value {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--teal);
-      letter-spacing: -0.3px;
-      text-shadow: 0 0 18px rgba(77,217,232,0.4);
-    }
-    .stat-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-
-    /* Inline CTA */
-    .main-cta {
-      width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
-      border: none;
-      border-radius: 16px;
-      padding: 20px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #0b1423;
-      cursor: pointer;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-bottom: 36px;
-      animation: fadeUp 0.5s 0.5s ease both;
-      box-shadow: 0 4px 30px rgba(77,217,232,0.45), 0 0 0 1px rgba(77,217,232,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
-      position: relative;
-      overflow: hidden;
-    }
-    .main-cta::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-      transform: translateX(-100%);
-      animation: shimmer 3s ease-in-out infinite 2s;
-    }
-    @keyframes shimmer { to { transform: translateX(100%); } }
-    .main-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(77,217,232,0.55), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .main-cta:active { transform: scale(0.98); }
-
-    /* Steps */
-    .steps-wrap {
-      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      animation: fadeUp 0.5s 0.6s ease both;
+      align-items: center;
+      padding: 14px 8px;
+      background: rgba(255,255,255,0.03);
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
-    .step-card {
-      background: #11202f;
-      border: 1px solid rgba(77,217,232,0.1);
-      border-radius: 16px;
-      padding: 18px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .step-card:hover {
-      border-color: rgba(77,217,232,0.22);
-      box-shadow: 0 4px 20px rgba(77,217,232,0.08);
-    }
-    .step-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(77,217,232,0.15), transparent);
-    }
-    .step-num {
-      width: 30px; height: 30px;
-      min-width: 30px;
-      background: linear-gradient(135deg, var(--teal), var(--teal-dim));
-      border-radius: 50%;
+    .stat:last-child { border-right: none; }
+    .stat-icon { font-size: 20px; margin-bottom: 3px; }
+    .stat-value { color: #fff; font-weight: 800; font-size: 13px; }
+    .stat-label { color: #6b7280; font-size: 11px; }
+
+    /* Bonus card */
+    .bonus-card {
+      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: #0b1423;
-      box-shadow: 0 3px 12px rgba(77,217,232,0.4);
-      flex-shrink: 0;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(74,222,128,0.10), rgba(34,197,94,0.04));
+      border: 1px solid rgba(74,222,128,0.32);
     }
-    .step-body { flex: 1; }
-    .step-title-row {
+    .bonus-emoji { font-size: 42px; animation: wiggle 1.6s ease-in-out infinite; }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-14deg) scale(1.1); }
+      75% { transform: rotate(14deg) scale(1.1); }
+    }
+    .bonus-text { font-weight: 900; font-size: 22px; color: #4ade80; }
+    .bonus-sub { color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+
+    /* Age buttons */
+    .age-btn {
+      width: 100%;
+      border-radius: 18px;
+      padding: 18px 16px;
+      font-weight: 900;
+      font-size: 19px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 12px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .age-btn:active { transform: scale(0.97); }
+    .age-btn.primary {
+      color: #000;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      box-shadow: 0 8px 28px rgba(74,222,128,0.36);
+      animation: btnPulse 2.4s ease-in-out infinite;
+    }
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 8px 28px rgba(74,222,128,0.36); }
+      50% { box-shadow: 0 8px 46px rgba(74,222,128,0.68); }
+    }
+    .age-btn.primary .btn-sub { font-size: 12px; font-weight: 500; color: rgba(0,0,0,0.58); }
+    .age-btn.secondary {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+    }
+    .age-btn.secondary .btn-sub { font-size: 12px; font-weight: 500; color: #6b7280; }
+
+    /* Live indicator */
+    .live-indicator {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
+      margin-bottom: 26px;
     }
-    .step-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #e0f4f8;
-    }
-    .key-badge {
-      background: rgba(77,217,232,0.12);
-      border: 1px solid rgba(77,217,232,0.3);
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      color: var(--teal);
-      text-transform: uppercase;
-    }
-    .step-desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.6;
-    }
-
-    /* Fixed bottom CTA */
-    .cta-wrapper {
-      position: fixed;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      padding: 16px 18px 36px;
-      background: linear-gradient(to top, #0b1423 55%, transparent);
-      z-index: 100;
-    }
-    .cta-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
-      border: none;
-      border-radius: 16px;
-      padding: 18px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #0b1423;
-      cursor: pointer;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 28px rgba(77,217,232,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-btn::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-      transform: translateX(-100%);
-      animation: shimmer 3s ease-in-out infinite 1s;
-    }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 38px rgba(77,217,232,0.55), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .cta-btn:active { transform: scale(0.98); }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.78);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      padding: 20px;
-    }
-    .modal-overlay.active { opacity:1; pointer-events:all; }
-    .modal-box {
-      width: 100%;
-      max-width: 380px;
-      background: #0e1b2e;
-      border: 1px solid rgba(77,217,232,0.2);
-      border-radius: 24px;
-      padding: 32px 28px;
-      text-align: center;
-      transform: scale(0.88) translateY(20px);
-      transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(77,217,232,0.1);
-      position: relative;
-    }
-    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      width: 30px; height: 30px;
-      background: rgba(255,255,255,0.08);
-      border: none;
+    .live-dot {
+      width: 10px; height: 10px;
       border-radius: 50%;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
+      background: #4ade80;
+      animation: livePulse 1.4s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.7); opacity: 0.3; }
+    }
+    .live-text { color: #d1d5db; font-size: 13px; }
+    .live-text strong { color: #fff; }
+
+    /* Cashout methods */
+    .cashout-section { width: 100%; margin-bottom: 26px; }
+    .cashout-label {
+      color: #6b7280;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .cashout-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cashout-pill {
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #d1d5db;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    /* Footer */
+    .footer-links {
+      color: #4b5563;
+      font-size: 11px;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .footer-links a { color: #4b5563; text-decoration: none; }
+    .footer-copy { color: #4b5563; font-size: 11px; }
+
+    /* ═══════ PAGE 2 ═══════ */
+    .check-icon-wrap { margin-bottom: 20px; }
+    .check-icon {
+      width: 82px; height: 82px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      animation: checkPulse 2.2s ease-in-out infinite;
     }
-    .modal-close:hover { background: rgba(255,255,255,0.15); }
-    .modal-tag {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      color: var(--teal);
-      text-transform: uppercase;
-      margin-bottom: 16px;
+    @keyframes checkPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+      50% { box-shadow: 0 0 0 14px rgba(74,222,128,0.18); }
     }
-    .modal-title {
-      font-size: 26px;
+    .check-icon svg { width: 38px; height: 38px; }
+
+    .page2 h1 {
+      font-size: 40px;
       font-weight: 900;
       color: #fff;
-      line-height: 1.2;
-      margin-bottom: 24px;
-      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+      text-align: center;
     }
-    .modal-title .teal { color: var(--teal); text-shadow: 0 0 25px rgba(77,217,232,0.45); }
-    .modal-table {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      text-align: left;
-    }
-    .modal-row {
+
+    .paid-badge {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
     }
-    .modal-row:last-child { border-bottom: none; }
-    .modal-row-label { font-size: 13px; color: var(--text-sub); }
-    .modal-row-value { font-size: 13.5px; font-weight: 700; color: #e0f4f8; }
-    .modal-row-value.teal { color: var(--teal); }
-    .modal-desc {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.65;
-      margin-bottom: 24px;
+    .paid-badge-emoji { font-size: 20px; animation: bounce 1.4s ease-in-out infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
-    .modal-desc strong { color: var(--teal); font-weight: 600; }
-    .modal-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
-      border: none;
-      border-radius: 14px;
-      padding: 17px;
-      font-size: 16px;
-      font-weight: 800;
-      color: #0b1423;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 24px rgba(77,217,232,0.4), inset 0 1px 0 rgba(255,255,255,0.35);
-    }
-    .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(77,217,232,0.5), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .modal-btn:active { transform: scale(0.98); }
+    .paid-badge-text { font-weight: 800; font-size: 13px; color: #4ade80; }
 
-    @media (max-width: 380px) {
-      .headline { font-size: 46px; }
+    .page2 .subtitle { margin-bottom: 24px; }
+
+    /* Stats cards */
+    .stats-cards {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 8px;
+      border-radius: 16px;
+      background: rgba(74,222,128,0.06);
+      border: 1px solid rgba(74,222,128,0.14);
+    }
+    .stat-card-icon { font-size: 20px; }
+    .stat-card-value { color: #fff; font-weight: 800; font-size: 13px; margin-top: 3px; }
+    .stat-card-label { color: #6b7280; font-size: 11px; }
+
+    /* Activation card */
+    .activation-card {
+      width: 100%;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: rgba(7,9,17,0.98);
+      border: 1px solid rgba(74,222,128,0.18);
+      box-shadow: 0 4px 50px rgba(74,222,128,0.05);
+    }
+    .activation-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .activation-header-emoji { font-size: 22px; }
+    .activation-header-text { font-weight: 800; color: #fff; font-size: 15px; }
+    .activation-badge {
+      padding: 3px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      animation: badgePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 0.65; }
+      50% { opacity: 1; }
+    }
+    .activation-desc {
+      color: #d1d5db;
+      font-size: 14px;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .activation-desc .highlight {
+      color: #4ade80;
+      font-weight: 700;
+      animation: textPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes textPulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    .activation-desc strong { color: #4ade80; }
+
+    /* Pro tip */
+    .pro-tip {
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(234,179,8,0.09), rgba(245,158,11,0.04));
+      border: 1px solid rgba(234,179,8,0.2);
+      animation: tipBorder 2.8s ease-in-out infinite;
+    }
+    @keyframes tipBorder {
+      0%, 100% { border-color: rgba(234,179,8,0.12); }
+      50% { border-color: rgba(234,179,8,0.48); }
+    }
+    .pro-tip-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .pro-tip-header span:first-child { font-size: 15px; animation: zap 0.9s ease-in-out infinite; }
+    @keyframes zap {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+    }
+    .pro-tip-label {
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .pro-tip-text {
+      color: #fde68a;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .pro-tip-text strong { color: #fde68a; }
+
+    /* Steps card */
+    .steps-card {
+      width: 100%;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 20px;
+      background: rgba(7,9,17,0.98);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .steps-label {
+      color: #6b7280;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .step + .step { margin-top: 20px; }
+    .step-num {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      color: #000;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      box-shadow: 0 4px 14px rgba(74,222,128,0.4);
+    }
+    .step-content { flex: 1; }
+    .step-title-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .step-title-row span:first-child { font-size: 16px; }
+    .step-title { font-weight: 800; color: #fff; font-size: 14px; }
+    .step-desc { color: #6b7280; font-size: 12px; margin-top: 3px; }
+
+    /* Trust badges */
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .trust-badge {
+      font-size: 12px;
+      color: #d1d5db;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Fixed CTA */
+    .cta-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 20px 30px;
+      background: linear-gradient(to top, #050508 58%, transparent);
+      z-index: 50;
+    }
+    .cta-inner { max-width: 420px; margin: 0 auto; }
+    .main-cta {
+      width: 100%;
+      border-radius: 20px;
+      padding: 20px 16px;
+      font-weight: 900;
+      font-size: 20px;
+      color: #000;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      animation: ctaPulse 2.4s ease-in-out infinite;
+      transition: transform 0.15s;
+    }
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(74,222,128,0.42); }
+      50% { box-shadow: 0 10px 56px rgba(74,222,128,0.76); }
+    }
+    .main-cta:active { transform: scale(0.97); }
+    .cta-sub {
+      text-align: center;
+      color: #6b7280;
+      font-size: 11px;
+      margin-top: 9px;
     }
   </style>
 </head>
 <body>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <div class="page">
-
-    <!-- Toast Rotator -->
-    <div class="toast-rotator" id="toastRotator"></div>
-
-    <!-- App Icon -->
-    <div class="app-icon-wrap">
-      <div class="app-icon-glow"></div>
-      <div class="app-icon">
-        <img src="https://i.imgur.com/qH0hufN.jpeg" alt="Gravy Wallet"/>
-      </div>
-    </div>
-
-    <!-- Bonus Badge -->
-    <div class="bonus-badge">
-      <div class="bonus-dot"></div>
-      $10 Signup Bonus
-    </div>
-
-    <!-- Headline -->
-    <div class="headline">
-      <span class="white">Get Paid</span>
-      <span class="teal">to Play</span>
-    </div>
-
-    <p class="subtitle">
-      Earn real cash for installing &amp; playing 1 game. $10 just for signing up. Cash out to PayPal, Apple Pay, or gift cards.
-    </p>
-
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-value">$200–$500+</div>
-        <div class="stat-label">Weekly Earnings</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">$50K+</div>
-        <div class="stat-label">Paid Out</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">4.8 ★</div>
-        <div class="stat-label">Member Rated</div>
-      </div>
-    </div>
-
-    <!-- Inline CTA -->
-    <button class="main-cta" onclick="openModal()">Activate Wallet &amp; Start Earning</button>
-
-    <!-- Steps -->
-    <div class="steps-wrap">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Create your free Gravy Pass account</span>
-          </div>
-          <p class="step-desc">Takes 30 seconds. Add the pass to Apple Wallet — your $10 signup bonus loads instantly.</p>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Install &amp; play 1 free game</span>
-            <span class="key-badge">Key Step</span>
-          </div>
-          <p class="step-desc">Pick any featured game from your offerwall. Install it from the App Store and play for 5 minutes. That single install activates your full earnings and unlocks every higher-paying offer + instant cashout.</p>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Get paid</span>
-          </div>
-          <p class="step-desc">Earnings rack up as you play. Cash out anytime to PayPal, Apple Pay, Amazon, or Visa gift cards. No minimum.</p>
-        </div>
-      </div>
-    </div>
-
+  <!-- Background -->
+  <div class="bg-layer">
+    <div class="bg-grad-1"></div>
+    <div class="bg-grad-2"></div>
+    <div class="particle" style="left:3%;top:7%;width:2.5px;height:2.5px;animation-duration:9s;animation-delay:0s;"></div>
+    <div class="particle" style="left:20%;top:20%;width:3.5px;height:3.5px;animation-duration:10s;animation-delay:0.55s;"></div>
+    <div class="particle" style="left:37%;top:33%;width:1.5px;height:1.5px;animation-duration:11s;animation-delay:1.1s;"></div>
+    <div class="particle" style="left:54%;top:46%;width:2.5px;height:2.5px;animation-duration:12s;animation-delay:1.65s;"></div>
+    <div class="particle" style="left:71%;top:59%;width:3.5px;height:3.5px;animation-duration:13s;animation-delay:2.2s;"></div>
+    <div class="particle" style="left:88%;top:72%;width:1.5px;height:1.5px;animation-duration:14s;animation-delay:2.75s;"></div>
+    <div class="particle" style="left:8%;top:85%;width:2.5px;height:2.5px;animation-duration:15s;animation-delay:3.3s;"></div>
+    <div class="particle" style="left:25%;top:5%;width:3.5px;height:3.5px;animation-duration:16s;animation-delay:3.85s;"></div>
+    <div class="particle" style="left:42%;top:18%;width:1.5px;height:1.5px;animation-duration:9s;animation-delay:4.4s;"></div>
+    <div class="particle" style="left:59%;top:31%;width:2.5px;height:2.5px;animation-duration:10s;animation-delay:4.95s;"></div>
   </div>
 
-  <!-- Fixed Bottom CTA -->
-  <div class="cta-wrapper">
-    <button class="cta-btn" onclick="openModal()">Activate Wallet &amp; Start Earning</button>
+  <!-- Notification Toast -->
+  <div class="notif-toast" id="notifToast">
+    <div class="notif-icon">
+      <img src="https://i.imgur.com/1UmZT5o.png" alt="Logo"/>
+      <div class="notif-badge">$</div>
+    </div>
+    <div class="notif-body">
+      <div class="notif-title" id="notifTitle">Tamika J. just cashed out</div>
+      <div class="notif-sub" id="notifSub">Withdrew to Venmo</div>
+    </div>
+    <div class="notif-time">just now</div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal-box" id="modalBox">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <div class="modal-tag">Quick Heads Up</div>
-      <div class="modal-title">
-        To unlock <span class="teal">your full earnings</span>, install &amp; play <span class="teal">1 free game</span> after signup
-      </div>
-      <div class="modal-table">
-        <div class="modal-row">
-          <span class="modal-row-label">Step</span>
-          <span class="modal-row-value">Install 1 game</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-row-label">Play time required</span>
-          <span class="modal-row-value teal">5 minutes</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-row-label">Unlocks</span>
-          <span class="modal-row-value teal">All offers + payouts</span>
+  <!-- Page 1: Prelander -->
+  <div class="page active" id="page1">
+    <div class="page-inner">
+      <div class="logo-wrap">
+        <div class="logo-box">
+          <img src="https://i.imgur.com/1UmZT5o.png" alt="Logo"/>
         </div>
       </div>
-      <p class="modal-desc">
-        That single install activates everything — including <strong>instant PayPal cashout</strong> and all higher-paying offers.
+
+      <div class="headline">
+        <div class="headline-white">Get Paid to</div>
+        <div class="headline-green">Game</div>
+      </div>
+
+      <p class="subtitle">
+        Earn rewards for completing quick tasks. Instant cashout via PayPal.
+        <br/><span class="muted">100% free. No credit card required.</span>
       </p>
-      <button class="modal-btn" onclick="goToOffer()">Got it →</button>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-icon">⭐</span>
+          <span class="stat-value">4.8</span>
+          <span class="stat-label">Rating</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">👥</span>
+          <span class="stat-value">500K+</span>
+          <span class="stat-label">Members</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">💵</span>
+          <span class="stat-value">$2.80M</span>
+          <span class="stat-label">Paid Out</span>
+        </div>
+      </div>
+
+      <div class="bonus-card">
+        <span class="bonus-emoji">🎁</span>
+        <div>
+          <div class="bonus-text">Welcome Bonus</div>
+          <div class="bonus-sub">Free when you sign up today</div>
+        </div>
+      </div>
+
+      <button class="age-btn primary" onclick="goToPage2()">
+        <span>I'm over 21</span>
+        <span class="btn-sub">Instant cashout · PayPal, CashApp, Venmo & more</span>
+      </button>
+
+      <button class="age-btn secondary" onclick="goToPage2()">
+        <span>I'm under 21</span>
+        <span class="btn-sub">Limited cashout · Wire transfer only</span>
+      </button>
+
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span class="live-text"><strong>13,083</strong> earning right now</span>
+      </div>
+
+      <div class="cashout-section">
+        <p class="cashout-label">Cashout via</p>
+        <div class="cashout-pills">
+          <span class="cashout-pill">PayPal</span>
+          <span class="cashout-pill">CashApp</span>
+          <span class="cashout-pill">Venmo</span>
+          <span class="cashout-pill">Crypto</span>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Privacy</a>·
+        <a href="#">Terms</a>·
+        <a href="#">Disclaimer</a>
+      </div>
+      <div class="footer-copy">© 2026 All rights reserved</div>
+    </div>
+  </div>
+
+  <!-- Page 2: Main Lander -->
+  <div class="page page2" id="page2">
+    <div class="page-inner">
+      <div class="check-icon-wrap">
+        <div class="check-icon">
+          <svg fill="none" stroke="#000" stroke-width="3.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1>You're In! 🎉</h1>
+
+      <div class="paid-badge">
+        <span class="paid-badge-emoji">💰</span>
+        <span class="paid-badge-text">$2,847,515+ paid to members</span>
+      </div>
+
+      <p class="subtitle">
+        Your account is pre-qualified. Sign up to claim your <strong>welcome bonus</strong> and unlock instant cashout.
+      </p>
+
+      <div class="stats-cards">
+        <div class="stat-card">
+          <span class="stat-card-icon">⭐</span>
+          <span class="stat-card-value">4.8</span>
+          <span class="stat-card-label">Rating</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card-icon">👥</span>
+          <span class="stat-card-value">500K+</span>
+          <span class="stat-card-label">Members</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card-icon">💵</span>
+          <span class="stat-card-value">$2.8M</span>
+          <span class="stat-card-label">Paid Out</span>
+        </div>
+      </div>
+
+      <div class="activation-card">
+        <div class="activation-header">
+          <span class="activation-header-emoji">🔒</span>
+          <span class="activation-header-text">Activation Required</span>
+          <span class="activation-badge">NEW USERS</span>
+        </div>
+        <p class="activation-desc">
+          Complete <span class="highlight">2 quick offers</span> to unlock full access and start earning rewards playing games.
+        </p>
+        <div class="pro-tip">
+          <div class="pro-tip-header">
+            <span>⚡</span>
+            <span class="pro-tip-label">Pro Tip</span>
+          </div>
+          <p class="pro-tip-text">
+            <strong>Paid deals reward the most.</strong> Premium offers pay out far more than free ones — stack offers to maximize your rewards.
+          </p>
+        </div>
+      </div>
+
+      <div class="steps-card">
+        <p class="steps-label">💵 Your Earning Journey</p>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title-row">
+              <span>🚀</span>
+              <span class="step-title">Sign up & claim your bonus</span>
+            </div>
+            <p class="step-desc">Quick online signup — under 60 seconds</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title-row">
+              <span>🎮</span>
+              <span class="step-title">Complete daily tasks</span>
+            </div>
+            <p class="step-desc">Play games, watch videos, take surveys — earn rewards instantly</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title-row">
+              <span>💸</span>
+              <span class="step-title">Cash out instantly</span>
+            </div>
+            <p class="step-desc">PayPal · CashApp · Venmo · Crypto · Wire</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-badges">
+        <span class="trust-badge">✅ Verified Payouts</span>
+        <span class="trust-badge">🆓 Free Forever</span>
+        <span class="trust-badge">🔒 Secure</span>
+        <span class="trust-badge">⚡ Instant Cash</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Privacy</a>·
+        <a href="#">Terms</a>·
+        <a href="#">Disclaimer</a>
+      </div>
+      <div class="footer-copy">© 2026 All rights reserved</div>
+    </div>
+
+    <!-- Fixed CTA -->
+    <div class="cta-wrapper">
+      <div class="cta-inner">
+        <button class="main-cta" onclick="goToOffer()">
+          <span>→</span>
+          <span>Claim My Bonus</span>
+        </button>
+        <p class="cta-sub">🔒 Free to join · Bonus credited to your account</p>
+      </div>
     </div>
   </div>
 
@@ -673,94 +795,62 @@
     // Break out of TikTok WebView into native browser
     const breakToNativeBrowser = (url) => {
         if (isAndroid()) {
-            // Android Intent URL - forces default browser
             const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;end`;
             window.location.href = intentUrl;
         } else {
-            // iOS - x-safari-https scheme bypasses TikTok's confirmation dialog
             window.location.href = url.replace(/^https:\/\//, 'x-safari-https://');
         }
     };
 
     // Redirect to offer with params + browser break
     function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzgyMjU0MjI0NzEyfQ';
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4MjMzMjAwNzE3MH0?s4=notiproof-test';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
     }
 
-    const toastData = [
-      { initials: 'AH', name: 'Avery H.',   amount: '+$6.80',  action: 'Spun the money wheel',       time: '1s ago' },
-      { initials: 'JT', name: 'James T.',   amount: '+$47.50', action: 'Completed Roblox offer',      time: '12s ago' },
-      { initials: 'SB', name: 'Sarah B.',   amount: '+$12.00', action: 'Installed Block Blast',       time: '28s ago' },
-      { initials: 'OW', name: 'Owen W.',    amount: '+$23.75', action: 'Reached level 10 in-game',    time: '45s ago' },
-      { initials: 'EC', name: 'Emily C.',   amount: '+$89.20', action: 'Cashed out via PayPal',       time: '1m ago'  },
-      { initials: 'GH', name: 'Gary H.',    amount: '+$31.00', action: 'Completed 8 Ball Pool offer', time: '2m ago'  },
-      { initials: 'CR', name: 'Casey R.',   amount: '+$56.40', action: 'Finished Subway Surfers task',time: '3m ago'},
-      { initials: 'LM', name: 'Liam M.',    amount: '+$18.90', action: 'Signed up & got bonus',       time: '4m ago'  },
-      { initials: 'MK', name: 'Mia K.',     amount: '+$72.00', action: 'Cashed out to Apple Pay',     time: '5m ago'  },
-      { initials: 'RP', name: 'Ryan P.',    amount: '+$9.50',  action: 'Completed a starter offer',   time: '6m ago'  },
-    ];
-
-    let currentToast = null;
-    let currentIndex = 0;
-
-    function buildToastEl(data) {
-      const el = document.createElement('div');
-      el.className = 'toast';
-      el.innerHTML = `
-        <div class="toast-icon">
-          <img src="https://i.imgur.com/qH0hufN.jpeg" alt="Gravy"/>
-        </div>
-        <div class="toast-body">
-          <div class="toast-name">${data.name} earned <span>${data.amount}</span></div>
-          <div class="toast-sub">${data.action}</div>
-        </div>
-        <div class="toast-time">${data.time}</div>
-      `;
-      return el;
+    // Page navigation
+    function goToPage2() {
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
     }
 
-    function showNextToast() {
-      const rotator = document.getElementById('toastRotator');
-      const data = toastData[currentIndex % toastData.length];
-      currentIndex++;
+    // Notification system
+    const NOTIFS = [
+      { name: "Tamika J.", action: "Withdrew to Venmo" },
+      { name: "Chris T.", action: "Completed a survey" },
+      { name: "Marcus B.", action: "Withdrew to PayPal" },
+      { name: "Sarah K.", action: "Withdrew to CashApp" },
+      { name: "Jordan M.", action: "Completed a task" },
+      { name: "Ashley R.", action: "Withdrew to Venmo" },
+      { name: "Devon L.", action: "Completed a survey" },
+      { name: "Priya N.", action: "Withdrew to PayPal" },
+      { name: "Tyler W.", action: "Withdrew to CashApp" },
+      { name: "Keisha D.", action: "Completed a task" },
+      { name: "Darius F.", action: "Withdrew to Venmo" },
+      { name: "Monica S.", action: "Completed a survey" },
+    ];
 
-      const newToast = buildToastEl(data);
-      rotator.appendChild(newToast);
+    let notifIdx = 0;
 
-      // Trigger entrance
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          newToast.classList.add('visible');
-        });
-      });
+    function showNotif() {
+      const n = NOTIFS[notifIdx];
+      document.getElementById('notifTitle').textContent = `${n.name} just cashed out`;
+      document.getElementById('notifSub').textContent = n.action;
+      
+      const toast = document.getElementById('notifToast');
+      toast.classList.add('visible');
 
-      // Exit old toast
-      if (currentToast) {
-        const old = currentToast;
-        old.classList.remove('visible');
-        old.classList.add('exit');
-        setTimeout(() => { if (old.parentNode) old.parentNode.removeChild(old); }, 400);
-      }
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3500);
 
-      currentToast = newToast;
+      notifIdx = (notifIdx + 1) % NOTIFS.length;
+      setTimeout(showNotif, 3600);
     }
 
     // Init
-    showNextToast();
-    setInterval(showNextToast, 3200);
-
-    // Modal
-    function openModal() {
-      document.getElementById('modalOverlay').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-    }
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('modalOverlay')) closeModal();
-    }
+    setTimeout(showNotif, 2200);
   </script>
 
 </body>
