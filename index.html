@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Freecash – Earn Playing Dice Dreams</title>
+<title>Freecash – Earn Playing Games</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -18,11 +18,13 @@ body{
   background:var(--bg);color:var(--tx);
   font-family:'Inter',-apple-system,sans-serif;
   min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  overflow-x:hidden;padding-bottom:115px
+  overflow-x:hidden;padding-bottom:280px
 }
 .glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
 .glow-1{width:600px;height:400px;background:rgba(34,197,94,0.06);top:-80px;left:50%;transform:translateX(-50%)}
 .glow-2{width:280px;height:280px;background:rgba(34,197,94,0.04);bottom:160px;right:-80px}
+
+/* TICKER */
 .ticker{
   width:100%;
   background:linear-gradient(90deg,rgba(34,197,94,0.06),rgba(34,197,94,0.03));
@@ -45,6 +47,8 @@ body{
   font-size:9.5px;font-weight:700;padding:2px 8px;
   border-radius:20px;border:1px solid rgba(34,197,94,0.2)
 }
+
+/* PAGE */
 .page{width:100%;max-width:430px;padding:18px 14px 20px;position:relative;z-index:1}
 .up{opacity:0;transform:translateY(20px);animation:up .55s ease forwards}
 @keyframes up{to{opacity:1;transform:none}}
@@ -53,6 +57,9 @@ body{
 .up:nth-child(3){animation-delay:.25s}
 .up:nth-child(4){animation-delay:.33s}
 .up:nth-child(5){animation-delay:.40s}
+.up:nth-child(6){animation-delay:.47s}
+
+/* HERO */
 .hero{
   background:linear-gradient(160deg,#0f1f14 0%,#0a130d 100%);
   border:1px solid rgba(34,197,94,0.18);
@@ -112,6 +119,8 @@ body{
 .dot-ring{width:9px;height:9px;background:var(--gb);border-radius:50%;position:absolute;animation:ping 2s ease-out infinite;opacity:.5}
 @keyframes ping{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.8);opacity:0}}
 .lc{color:#fff;font-weight:800}
+
+/* STATS */
 .stats{display:flex;gap:8px;margin-bottom:12px}
 .stat{
   flex:1;background:var(--c1);border:1px solid var(--bb);
@@ -120,6 +129,8 @@ body{
 .sval{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:3px}
 .sval span{color:var(--gb)}
 .slbl{font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mu);text-transform:uppercase}
+
+/* OFFER CARD */
 .offer-card{
   background:var(--c1);border:1px solid var(--bb);
   border-radius:26px;padding:0;margin-bottom:12px;
@@ -183,6 +194,138 @@ body{
 }
 .stxt{font-size:13.5px;color:#ddd;font-weight:500}
 .stxt strong{color:#fff}
+
+/* PAYOUT PROGRESS CARD */
+.payout-card{
+  background:linear-gradient(160deg,#0f1f14,#0a130d);
+  border:1px solid rgba(34,197,94,0.22);
+  border-radius:26px;padding:22px 20px 20px;
+  margin-bottom:12px;position:relative;overflow:hidden
+}
+.payout-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6),transparent)
+}
+.payout-card::after{
+  content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:300px;height:160px;
+  background:radial-gradient(ellipse,rgba(34,197,94,0.08) 0%,transparent 65%);
+  pointer-events:none
+}
+.pc-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;position:relative;z-index:1}
+.pc-coin{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.07));
+  border:1px solid rgba(34,197,94,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;flex-shrink:0;
+  box-shadow:0 0 20px rgba(34,197,94,0.15)
+}
+.pc-head-text h3{font-size:17px;font-weight:900;color:#fff;margin-bottom:3px;letter-spacing:-.3px}
+.pc-head-text p{font-size:12px;color:var(--mu)}
+.pc-head-text p span{color:var(--gb);font-weight:700}
+
+/* Progress bar */
+.prog-wrap{position:relative;z-index:1;margin-bottom:18px}
+.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.prog-label-left{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase}
+.prog-label-right{font-size:11px;font-weight:800;color:var(--gb)}
+.prog-track{
+  height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden
+}
+.prog-fill{
+  height:100%;width:50%;
+  background:linear-gradient(90deg,#22c55e,#4ade80);
+  border-radius:99px;
+  box-shadow:0 0 10px rgba(34,197,94,0.5);
+  transition:width 1s cubic-bezier(.22,1,.36,1)
+}
+
+/* Steps in payout card */
+.pc-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;position:relative;z-index:1}
+.pc-step{
+  display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--b);
+  border-radius:16px;padding:13px 14px;
+  transition:all .2s
+}
+.pc-step.done{
+  background:rgba(34,197,94,0.06);
+  border-color:rgba(34,197,94,0.2)
+}
+.pc-step-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;position:relative
+}
+.pc-step.done .pc-step-icon{
+  background:rgba(34,197,94,0.1);
+  border-color:rgba(34,197,94,0.25)
+}
+.check-badge{
+  position:absolute;top:-5px;right:-5px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--g);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;color:#000;font-weight:900;
+  border:2px solid #0a130d;
+  box-shadow:0 0 8px rgba(34,197,94,.5)
+}
+.pc-step-body{flex:1;min-width:0}
+.pc-step-body .ps-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
+.pc-step-body .ps-sub{font-size:11.5px;color:var(--mu)}
+.pc-step-badge{
+  font-size:11px;font-weight:800;
+  padding:5px 11px;border-radius:20px;
+  flex-shrink:0;white-space:nowrap
+}
+.badge-free{
+  background:rgba(255,255,255,0.07);
+  color:#fff;border:1px solid rgba(255,255,255,0.12)
+}
+.badge-earn{
+  background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.08));
+  color:var(--gb);border:1px solid rgba(34,197,94,0.3);
+  box-shadow:0 0 12px rgba(34,197,94,.15)
+}
+
+/* CTA inside card */
+.pc-cta{
+  width:100%;position:relative;z-index:1;
+  background:linear-gradient(135deg,#22c55e,#15803d);
+  color:#000;border:none;border-radius:16px;
+  padding:15px 20px;font-size:16px;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .25s;
+  box-shadow:0 6px 28px rgba(34,197,94,.4),0 2px 0 rgba(255,255,255,.15) inset;
+  letter-spacing:-.3px
+}
+.pc-cta:hover{
+  box-shadow:0 10px 40px rgba(34,197,94,.55);
+  transform:translateY(-2px)
+}
+.pc-cta:active{transform:scale(.98)}
+.pc-cta .arrow{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0
+}
+
+/* Trust row */
+.trust-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:4px;margin-top:13px;flex-wrap:wrap;position:relative;z-index:1
+}
+.trust-item{
+  display:flex;align-items:center;gap:4px;
+  font-size:10.5px;color:var(--mu);font-weight:600
+}
+.trust-item .ti-icon{font-size:11px}
+.trust-sep{color:rgba(255,255,255,0.1);font-size:11px}
+
+/* PAY CARD */
 .pay-card{
   background:var(--c1);border:1px solid var(--bb);
   border-radius:22px;padding:18px 18px;margin-bottom:12px
@@ -196,57 +339,58 @@ body{
   display:flex;flex-direction:column;align-items:center;gap:5px
 }
 .pay-item .pi{font-size:19px}
+
+/* DISCLAIMER */
 .disclaimer{font-size:10px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.8;margin:4px 0 10px;padding:0 6px}
 .flinks{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px}
 .flinks a{color:var(--mu);font-size:12px;text-decoration:none;transition:color .2s}
 .flinks a:hover{color:var(--gb)}
 .fdot{color:rgba(255,255,255,0.1)}
+
+/* STICKY */
 .sticky{
   position:fixed;bottom:0;left:0;right:0;z-index:100;
-  padding:10px 14px 12px;
-  background:rgba(7,8,10,0.88);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid rgba(255,255,255,0.07);
-  box-shadow:0 -1px 0 0 rgba(34,197,94,0.1),0 -20px 60px rgba(0,0,0,.7);
-  animation:su .5s cubic-bezier(.22,1,.36,1) both;animation-delay:.55s
+  padding:14px 14px 18px;
+  background:rgba(7,8,10,0.92);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid rgba(34,197,94,0.14);
+  box-shadow:0 -1px 0 0 rgba(34,197,94,0.1),0 -24px 60px rgba(0,0,0,.8);
+  animation:su .5s cubic-bezier(.22,1,.36,1) both;animation-delay:.6s
 }
 @keyframes su{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
 .sticky-inner{max-width:430px;margin:0 auto}
-.savail{
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  margin-bottom:9px;font-size:11px;color:var(--mu)
+
+/* Mini progress in sticky */
+.s-prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.s-prog-label{font-size:10px;color:var(--mu);font-weight:600;letter-spacing:.3px}
+.s-prog-frac{font-size:10px;font-weight:800;color:var(--gb)}
+.s-prog-track{height:3px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;margin-bottom:11px}
+.s-prog-fill{height:100%;width:50%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:99px;box-shadow:0 0 8px rgba(34,197,94,.5)}
+
+.s-cta{
+  width:100%;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#000;border:none;border-radius:16px;
+  padding:15px 20px;font-size:16px;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .22s;
+  box-shadow:0 6px 28px rgba(34,197,94,.4),0 2px 0 rgba(255,255,255,.12) inset;
+  letter-spacing:-.3px;text-decoration:none
 }
-.savail-dot{
-  width:6px;height:6px;background:var(--gb);border-radius:50%;
-  box-shadow:0 0 6px rgba(74,222,128,.6);flex-shrink:0
+.s-cta:hover{box-shadow:0 10px 38px rgba(34,197,94,.55);transform:translateY(-2px)}
+.s-cta:active{transform:scale(.98)}
+.s-cta .s-arrow{
+  width:27px;height:27px;border-radius:50%;
+  background:rgba(0,0,0,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0
 }
-.btns{display:flex;gap:9px}
-.dbtn{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:9px;
-  padding:13px 8px;border-radius:16px;border:none;cursor:pointer;
-  text-decoration:none;position:relative;overflow:hidden;
-  transition:all .2s
-}
-.dbtn::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
-.dbtn:hover::after{opacity:1}
-.dbtn:active{transform:scale(.97)}
-.dbtn-g{
-  background:linear-gradient(135deg,#22c55e,#15803d);color:#000;
-  box-shadow:0 4px 22px rgba(34,197,94,.35)
-}
-.dbtn-g::after{background:rgba(255,255,255,.1)}
-.dbtn-g:hover{box-shadow:0 6px 30px rgba(34,197,94,.5);transform:translateY(-1px)}
-.dbtn-a{
-  background:var(--c2);color:#fff;
-  border:1px solid var(--bb);
-  box-shadow:0 4px 16px rgba(0,0,0,.3)
-}
-.dbtn-a::after{background:rgba(255,255,255,.04)}
-.dbtn-a:hover{border-color:rgba(255,255,255,.18);transform:translateY(-1px)}
-.dbtn img{width:22px;height:22px;object-fit:contain}
-.btxt{display:flex;flex-direction:column;align-items:flex-start}
-.btxt .sm{font-size:9px;font-weight:500;opacity:.65}
-.btxt .lg{font-size:14px;font-weight:800;letter-spacing:-.3px}
+.s-trust{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:11px;flex-wrap:wrap}
+.s-ti{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mu);font-weight:600}
+.s-ti .i{font-size:11px}
+.s-sep{color:rgba(255,255,255,0.1);font-size:10px}
+
+/* MODAL */
 .overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.87);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
@@ -301,6 +445,7 @@ body{
 }
 .mcta:hover{box-shadow:0 6px 28px rgba(34,197,94,.5);transform:translateY(-1px)}
 .mcta:active{transform:scale(.98)}
+
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#1e1e1e;border-radius:4px}
@@ -311,6 +456,7 @@ body{
 <div class="glow glow-1"></div>
 <div class="glow glow-2"></div>
 
+<!-- TICKER -->
 <div class="ticker">
   <div class="ti" id="ti">
     <span id="tf">🇺🇸</span>
@@ -323,6 +469,7 @@ body{
 
 <div class="page">
 
+  <!-- HERO -->
   <div class="hero up">
     <div class="fc-logo-wrap">
       <img src="https://i.imgur.com/jFKnFwK.png" alt="Freecash" class="fc-logo"
@@ -349,6 +496,7 @@ body{
     </div>
   </div>
 
+  <!-- STATS -->
   <div class="stats up">
     <div class="stat">
       <div class="sval">$50<span>M+</span></div>
@@ -364,6 +512,7 @@ body{
     </div>
   </div>
 
+  <!-- OFFER CARD -->
   <div class="offer-card up">
     <div class="offer-banner">
       <img src="https://i.imgur.com/Tr2oUoZ.jpeg" alt="Dice Dreams" class="offer-banner-img">
@@ -373,7 +522,6 @@ body{
         <div class="offer-badge">🎲 Top Offer</div>
       </div>
     </div>
-
     <div class="offer-body">
       <div class="offer-row">
         <img src="https://i.imgur.com/Tr2oUoZ.jpeg" alt="Dice Dreams Icon" class="dice-icon">
@@ -387,11 +535,8 @@ body{
           </div>
         </div>
       </div>
-
       <div class="divider"></div>
-
       <div class="hiw-label">How to earn</div>
-
       <div class="steps">
         <div class="step">
           <div class="snum">1</div>
@@ -406,10 +551,68 @@ body{
           <div class="stxt">Withdraw via <strong>PayPal, Visa, or Crypto</strong></div>
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- PAYOUT PROGRESS CARD -->
+  <div class="payout-card up">
+    <div class="pc-head">
+      <div class="pc-coin">💰</div>
+      <div class="pc-head-text">
+        <h3>Unlock Your First Payout</h3>
+        <p>Complete <span>2 steps</span> to start earning</p>
+      </div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">
+        <span class="prog-label-left">Your Progress</span>
+        <span class="prog-label-right" id="prog-frac">0 / 2 complete</span>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="pc-steps">
+      <!-- Step 1 -->
+      <div class="pc-step" id="pcs1">
+        <div class="pc-step-icon" id="pcs1-icon">
+          <img src="https://i.imgur.com/jFKnFwK.png" width="22" height="22" style="object-fit:contain;border-radius:6px"
+               onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:900;color:#22c55e\'>FC</span>'">
+        </div>
+        <div class="pc-step-body">
+          <div class="ps-title">Sign Up on Freecash</div>
+          <div class="ps-sub">Free · Available on iOS &amp; Android</div>
+        </div>
+        <div class="pc-step-badge badge-free">FREE</div>
+      </div>
+      <!-- Step 2 -->
+      <div class="pc-step" id="pcs2">
+        <div class="pc-step-icon" id="pcs2-icon">⚡</div>
+        <div class="pc-step-body">
+          <div class="ps-title">Start 1 Offer</div>
+          <div class="ps-sub">Takes ~5 mins · instantly unlocks earnings</div>
+        </div>
+        <div class="pc-step-badge badge-earn">+$16/hr</div>
+      </div>
+    </div>
+
+    <button class="pc-cta" onclick="openModal()">
+      Start Earning — Sign Up Free
+      <div class="arrow">→</div>
+    </button>
+
+    <div class="trust-row">
+      <div class="trust-item"><span class="ti-icon">🔒</span> No cost</div>
+      <span class="trust-sep">·</span>
+      <div class="trust-item"><span class="ti-icon">⚡</span> Instant payouts</div>
+      <span class="trust-sep">·</span>
+      <div class="trust-item"><span class="ti-icon">✅</span> No experience needed</div>
+    </div>
+  </div>
+
+  <!-- WITHDRAW METHODS -->
   <div class="pay-card up">
     <div class="pay-label">Withdrawal Methods</div>
     <div class="pay-row">
@@ -432,31 +635,31 @@ body{
 
 </div>
 
+<!-- STICKY BAR -->
 <div class="sticky">
   <div class="sticky-inner">
-    <div class="savail">
-      <div class="savail-dot"></div>
-      <span>Free · Available on iOS &amp; Android</span>
+    <div class="s-prog-row">
+      <span class="s-prog-label">YOUR PROGRESS</span>
+      <span class="s-prog-frac">0 / 2 complete</span>
     </div>
-    <div class="btns">
-      <button class="dbtn dbtn-g" onclick="openModal()">
-        <img src="https://i.imgur.com/FsRNL2q.png" alt="Google Play" onerror="this.style.display='none'">
-        <div class="btxt">
-          <span class="sm">Get it on</span>
-          <span class="lg">Google Play</span>
-        </div>
-      </button>
-      <button class="dbtn dbtn-a" onclick="openModal()">
-        <img src="https://i.imgur.com/odFJO0L.png" alt="App Store" onerror="this.style.display='none'">
-        <div class="btxt">
-          <span class="sm">Download on the</span>
-          <span class="lg">App Store</span>
-        </div>
-      </button>
+    <div class="s-prog-track">
+      <div class="s-prog-fill" style="width:0%"></div>
+    </div>
+    <button class="s-cta" onclick="openModal()">
+      Start Earning — Sign Up Free
+      <div class="s-arrow">→</div>
+    </button>
+    <div class="s-trust">
+      <div class="s-ti"><span class="i">🔒</span> No cost</div>
+      <span class="s-sep">·</span>
+      <div class="s-ti"><span class="i">⚡</span> Instant payouts</div>
+      <span class="s-sep">·</span>
+      <div class="s-ti"><span class="i">✅</span> No experience needed</div>
     </div>
   </div>
 </div>
 
+<!-- MODAL -->
 <div class="overlay" id="ov" onclick="ovClick(event)">
   <div class="modal" id="modal">
     <div class="mglow"></div>
@@ -470,13 +673,47 @@ body{
 </div>
 
 <script>
-  var AFF = "https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4MzA1MDE0NTg3MX0?s4=new-july-land";
+  // ═══════ URL PARAM PASSTHROUGH + BROWSER BREAK ═══════
+  const appendUrlParams = (baseUrl) => {
+      const params = window.location.search;
+      if (!params) return baseUrl;
+      return baseUrl.includes('?') 
+          ? baseUrl + params.replace('?', '&') 
+          : baseUrl + params;
+  };
 
-  function goAff()     { window.open(AFF,'_blank'); closeModal(); }
+  const isAndroid = () => /android/i.test(navigator.userAgent);
+
+  const breakToNativeBrowser = (url) => {
+      if (isAndroid()) {
+          const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;end`;
+          window.location.href = intentUrl;
+      } else {
+          window.location.href = url.replace(/^https:\/\//, 'x-safari-https://');
+      }
+  };
+
+  function goToOffer() {
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4MzEwNDY4Mzg0NX0?s4=new-july-land';
+      const finalUrl = appendUrlParams(baseUrl);
+      breakToNativeBrowser(finalUrl);
+  }
+
+  // Legacy function name for compatibility
+  function goAff() { goToOffer(); }
+
   function openModal() { document.getElementById('ov').classList.add('open'); }
   function closeModal(){ document.getElementById('ov').classList.remove('open'); }
   function ovClick(e)  { if(e.target===document.getElementById('ov')) closeModal(); }
 
+  /* Animate progress bar on load */
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.getElementById('prog-fill').style.width = '0%';
+    }, 600);
+  });
+
+  /* Live counter */
   var base = 2134;
   setInterval(function(){
     base += Math.floor(Math.random()*9)-4;
@@ -484,9 +721,10 @@ body{
     document.getElementById('lc').textContent = base.toLocaleString();
   }, 3800);
 
-  var flags = ['🇺🇸','🇺🇸','🇺🇸','🇨🇦','🇬🇧','🇦🇺','🇩🇪','🇳🇱','🇳🇿','🇫🇷'];
-  var first = ['Jordan','Alex','Sarah','Mike','Emma','Chris','Tyler','Jessica','Ryan','Ashley','David','Lauren','Kevin','Megan','Brandon','Kayla','Nathan','Dylan','Cody','Jake','Olivia'];
-  var last  = ['P','M','K','T','L','B','R','W','H','C','N','G','S','F','D'];
+  /* Ticker */
+  var flags  = ['🇺🇸','🇺🇸','🇺🇸','🇨🇦','🇬🇧','🇦🇺','🇩🇪','🇳🇱','🇳🇿','🇫🇷'];
+  var first  = ['Jordan','Alex','Sarah','Mike','Emma','Chris','Tyler','Jessica','Ryan','Ashley','David','Lauren','Kevin','Megan','Brandon','Kayla','Nathan','Dylan','Cody','Jake','Olivia'];
+  var last   = ['P','M','K','T','L','B','R','W','H','C','N','G','S','F','D'];
   function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
   function rndAmt(){ return '$'+(Math.random()*70+6).toFixed(2); }
   var tiEl = document.getElementById('ti');
