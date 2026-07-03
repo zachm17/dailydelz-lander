@@ -6,328 +6,71 @@
     <title>Freecash – Get Paid to Play</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --green: #22c55e;
-            --green-bright: #4ade80;
-            --green-dim: #16a34a;
-            --bg: #030303;
-            --card: #0a0a0a;
-            --border: rgba(255,255,255,0.06);
-            --text: #e4e4e7;
-            --muted: #52525b;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', -apple-system, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 380px; height: 380px;
-            border-radius: 50%;
-            background: rgba(34,197,94,0.04);
-            filter: blur(100px);
-            top: -100px; left: 50%;
-            transform: translateX(-50%);
-            pointer-events: none;
-        }
-
-        /* Notification */
-        .notif {
-            width: 100%;
-            background: rgba(34,197,94,0.04);
-            border-bottom: 1px solid rgba(34,197,94,0.08);
-            padding: 8px 14px;
-            text-align: center;
-            font-size: 11px;
-            color: var(--muted);
-        }
-        .notif-inner { display: inline-flex; align-items: center; gap: 4px; transition: opacity 0.3s; }
-        .notif-inner.fade { opacity: 0; }
-        .n-name { color: #fff; font-weight: 700; }
-        .n-amt { color: var(--green-bright); font-weight: 800; }
-
-        .page {
-            width: 100%;
-            max-width: 380px;
-            padding: 16px 12px 36px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Hero */
-        .hero {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 26px 20px 22px;
-            text-align: center;
-            margin-bottom: 8px;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(34,197,94,0.35), transparent);
-        }
-
-        .logo-wrap {
-            width: 64px; height: 64px;
-            background: linear-gradient(145deg, #122016, #0a1410);
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 14px;
-            border: 1px solid rgba(34,197,94,0.12);
-        }
-        .logo { width: 40px; height: 40px; }
-
-        .rating {
-            display: inline-flex; align-items: center; gap: 4px;
-            font-size: 10px; color: var(--muted);
-            margin-bottom: 16px;
-        }
-        .rating .stars { color: var(--green-bright); }
-        .rating strong { color: #fff; }
-
-        h1 {
-            font-size: 34px; font-weight: 900;
-            line-height: 1.05; letter-spacing: -1.2px;
-        }
-        h1 .g {
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .desc {
-            font-size: 12px; color: var(--muted);
-            line-height: 1.6; margin: 10px auto 18px;
-            max-width: 260px;
-        }
-
-        .live {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-size: 11px; color: var(--muted);
-            background: rgba(34,197,94,0.05);
-            border: 1px solid rgba(34,197,94,0.1);
-            border-radius: 30px;
-            padding: 6px 14px;
-        }
-        .live-dot {
-            width: 6px; height: 6px;
-            background: var(--green-bright);
-            border-radius: 50%;
-            animation: pulse 1.6s infinite;
-        }
-        @keyframes pulse {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        .live strong { color: #fff; }
-
-        /* Stats */
-        .stats {
-            display: flex; gap: 6px;
-            margin-bottom: 8px;
-        }
-        .stat {
-            flex: 1;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 6px;
-            text-align: center;
-        }
-        .stat-val {
-            font-size: 16px; font-weight: 900; color: #fff;
-            letter-spacing: -0.3px;
-        }
-        .stat-val span { color: var(--green-bright); }
-        .stat-lbl {
-            font-size: 8px; color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-top: 2px;
-        }
-
-        /* Game */
-        .game {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 16px;
-            margin-bottom: 8px;
-        }
-        .game-row {
-            display: flex; align-items: center; gap: 10px;
-            margin-bottom: 14px;
-        }
-        .game-icon {
-            width: 50px; height: 50px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-        .game-title { font-size: 14px; font-weight: 800; color: #fff; }
-        .game-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-        .game-pay {
-            font-size: 11px; font-weight: 800;
-            color: var(--green-bright);
-            background: rgba(34,197,94,0.08);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-top: 4px;
-            display: inline-block;
-        }
-
-        .steps { display: flex; flex-direction: column; gap: 8px; }
-        .step {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .step-num {
-            width: 22px; height: 22px;
-            background: linear-gradient(135deg, var(--green), var(--green-dim));
-            color: #000;
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 900;
-        }
-        .step-text { font-size: 12px; color: #d4d4d8; }
-
-        /* Buttons */
-        .btns {
-            display: flex; gap: 6px;
-            margin-top: 8px;
-        }
-        .btn {
-            flex: 1;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            padding: 12px 8px;
-            border-radius: 14px;
-            border: none; cursor: pointer;
-            transition: all 0.15s;
-        }
-        .btn:active { transform: scale(0.97); }
-        .btn-g {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #000;
-            box-shadow: 0 4px 16px rgba(34,197,94,0.25);
-        }
-        .btn-a {
-            background: #111;
-            color: #fff;
-            border: 1px solid var(--border);
-        }
-        .btn img { width: 18px; height: 18px; }
-        .btn-txt { text-align: left; }
-        .btn-txt .sm { font-size: 8px; opacity: 0.6; display: block; }
-        .btn-txt .lg { font-size: 12px; font-weight: 800; }
-
-        .foot {
-            text-align: center;
-            font-size: 9px;
-            color: rgba(255,255,255,0.15);
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-
-        /* Modal */
-        .overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(6px);
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            z-index: 999;
-            opacity: 0; visibility: hidden;
-            transition: all 0.25s;
-        }
-        .overlay.open { opacity: 1; visibility: visible; }
-        .overlay.open .modal { transform: scale(1); }
-
-        .modal {
-            background: #090909;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 24px 20px 20px;
-            max-width: 280px; width: 100%;
-            text-align: center;
-            transform: scale(0.92);
-            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-            position: relative;
-        }
-        .modal::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(34,197,94,0.4), transparent);
-        }
-        .modal-x {
-            position: absolute; top: 12px; right: 12px;
-            width: 24px; height: 24px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            color: var(--muted);
-            font-size: 10px;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .modal-icon {
-            width: 48px; height: 48px;
-            background: rgba(34,197,94,0.1);
-            border: 1px solid rgba(34,197,94,0.18);
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 14px;
-            font-size: 22px;
-        }
-        .modal-tag {
-            font-size: 8px; font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--green-bright);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .modal h2 {
-            font-size: 18px; font-weight: 900;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-        .modal p {
-            font-size: 11px; color: var(--muted);
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-        .modal-cta {
-            width: 100%;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: #000;
-            border: none; border-radius: 10px;
-            padding: 12px;
-            font-size: 13px; font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(34,197,94,0.25);
-        }
-        .modal-cta:active { transform: scale(0.97); }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--g:#22c55e;--gb:#4ade80;--bg:#030303;--c:#0a0a0a;--b:rgba(255,255,255,0.06);--m:#52525b}
+        body{background:var(--bg);color:#e4e4e7;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+        .glow{position:fixed;width:350px;height:350px;border-radius:50%;background:rgba(34,197,94,0.035);filter:blur(90px);top:-80px;left:50%;transform:translateX(-50%);pointer-events:none}
+        .notif{width:100%;background:rgba(34,197,94,0.04);border-bottom:1px solid rgba(34,197,94,0.07);padding:7px 12px;text-align:center;font-size:10px;color:var(--m)}
+        .notif-inner{display:inline-flex;align-items:center;gap:4px;transition:opacity .25s}
+        .notif-inner.fade{opacity:0}
+        .n-name{color:#fff;font-weight:700}
+        .n-amt{color:var(--gb);font-weight:800}
+        .page{width:100%;max-width:360px;padding:14px 10px 32px;position:relative;z-index:1}
+        .hero{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:22px 18px 20px;text-align:center;margin-bottom:6px;position:relative}
+        .hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.3),transparent)}
+        .logo-wrap{width:56px;height:56px;background:linear-gradient(145deg,#101a14,#080e0a);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;border:1px solid rgba(34,197,94,0.1)}
+        .logo{width:36px;height:36px}
+        .rating{display:inline-flex;align-items:center;gap:3px;font-size:9px;color:var(--m);margin-bottom:14px}
+        .rating .stars{color:var(--gb)}
+        .rating strong{color:#fff}
+        h1{font-size:30px;font-weight:900;line-height:1.05;letter-spacing:-1px}
+        h1 .g{background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .desc{font-size:11px;color:var(--m);line-height:1.55;margin:8px auto 14px;max-width:240px}
+        .live{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--m);background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.08);border-radius:30px;padding:5px 12px}
+        .live-dot{width:5px;height:5px;background:var(--gb);border-radius:50%;animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        .live strong{color:#fff}
+        .stats{display:flex;gap:5px;margin-bottom:6px}
+        .stat{flex:1;background:var(--c);border:1px solid var(--b);border-radius:10px;padding:8px 4px;text-align:center}
+        .stat-val{font-size:14px;font-weight:900;color:#fff}
+        .stat-val span{color:var(--gb)}
+        .stat-lbl{font-size:7px;color:var(--m);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+        .game{background:var(--c);border:1px solid var(--b);border-radius:16px;padding:14px;margin-bottom:6px}
+        .game-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+        .game-icon{width:44px;height:44px;border-radius:10px;object-fit:cover}
+        .game-title{font-size:13px;font-weight:800;color:#fff}
+        .game-sub{font-size:9px;color:var(--m);margin-top:1px}
+        .game-pay{font-size:10px;font-weight:800;color:var(--gb);background:rgba(34,197,94,0.07);padding:2px 5px;border-radius:4px;margin-top:3px;display:inline-block}
+        .steps{display:flex;flex-direction:column;gap:6px}
+        .step{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.015);border:1px solid var(--b);border-radius:8px;padding:8px}
+        .step-num{width:20px;height:20px;background:linear-gradient(135deg,var(--g),#16a34a);color:#000;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+        .step-text{font-size:11px;color:#d4d4d8}
+        .btns{display:flex;gap:5px;margin-top:6px}
+        .dl-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 6px;border-radius:12px;border:none;cursor:pointer;transition:all .15s}
+        .dl-btn:active{transform:scale(.97)}
+        .btn-google{background:linear-gradient(135deg,#22c55e,#16a34a);color:#000;box-shadow:0 3px 14px rgba(34,197,94,0.22)}
+        .btn-apple{background:#111;color:#fff;border:1px solid var(--b)}
+        .dl-btn img{width:16px;height:16px}
+        .btn-txt{text-align:left}
+        .btn-txt .sm{font-size:7px;opacity:.6;display:block}
+        .btn-txt .lg{font-size:11px;font-weight:800}
+        .foot{text-align:center;font-size:8px;color:rgba(255,255,255,0.12);margin-top:8px}
+        .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:18px;z-index:999;opacity:0;visibility:hidden;transition:all .22s}
+        .overlay.open{opacity:1;visibility:visible}
+        .overlay.open .modal{transform:scale(1)}
+        .modal{background:#080808;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:22px 18px 18px;max-width:265px;width:100%;text-align:center;transform:scale(.92);transition:transform .28s cubic-bezier(.34,1.56,.64,1);position:relative}
+        .modal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.35),transparent)}
+        .modal-x{position:absolute;top:10px;right:10px;width:22px;height:22px;background:rgba(255,255,255,0.04);border:1px solid var(--b);border-radius:50%;color:var(--m);font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .modal-icon{width:44px;height:44px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px}
+        .modal-tag{font-size:7px;font-weight:800;letter-spacing:1.8px;color:var(--gb);text-transform:uppercase;margin-bottom:5px}
+        .modal h2{font-size:16px;font-weight:900;color:#fff;margin-bottom:5px}
+        .modal p{font-size:10px;color:var(--m);line-height:1.45;margin-bottom:14px}
+        .modal-cta{width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#000;border:none;border-radius:9px;padding:11px;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(34,197,94,0.2)}
+        .modal-cta:active{transform:scale(.97)}
     </style>
 </head>
 <body>
-
-<div class="bg-glow"></div>
-
+<div class="glow"></div>
 <div class="notif">
     <div class="notif-inner" id="notifInner">
         <span id="nFlag">🇺🇸</span>
@@ -336,104 +79,65 @@
         <span class="n-amt" id="nAmt">$17.77</span>
     </div>
 </div>
-
 <div class="page">
-
     <div class="hero">
         <div class="logo-wrap">
             <img src="https://i.imgur.com/jFKnFwK.png" alt="Freecash" class="logo">
         </div>
-
         <div class="rating">
             <span class="stars">★★★★★</span>
             <strong>4.7</strong>
-            <span>· 50K+ reviews</span>
+            <span>· 50K+</span>
         </div>
-
         <h1>Get paid<br><span class="g">to play</span></h1>
-
-        <p class="desc">Earn real cash playing games & completing tasks. Cash out anytime.</p>
-
+        <p class="desc">Earn cash playing games & tasks. Cash out anytime.</p>
         <div class="live">
             <span class="live-dot"></span>
-            <span><strong id="liveCount">1,847</strong> earning now</span>
+            <span><strong id="liveCount">1,847</strong> earning</span>
         </div>
     </div>
-
     <div class="stats">
-        <div class="stat">
-            <div class="stat-val">$50<span>M+</span></div>
-            <div class="stat-lbl">Paid Out</div>
-        </div>
-        <div class="stat">
-            <div class="stat-val">4.7<span>★</span></div>
-            <div class="stat-lbl">Rating</div>
-        </div>
-        <div class="stat">
-            <div class="stat-val"><span>$</span>0</div>
-            <div class="stat-lbl">To Join</div>
-        </div>
+        <div class="stat"><div class="stat-val">$50<span>M+</span></div><div class="stat-lbl">Paid</div></div>
+        <div class="stat"><div class="stat-val">4.7<span>★</span></div><div class="stat-lbl">Rating</div></div>
+        <div class="stat"><div class="stat-val"><span>$</span>0</div><div class="stat-lbl">To Join</div></div>
     </div>
-
     <div class="game">
         <div class="game-row">
             <img src="https://i.imgur.com/07ctuTw.jpeg" alt="Gardenscapes" class="game-icon">
             <div>
                 <div class="game-title">Gardenscapes</div>
-                <div class="game-sub">★★★★★ 4.8 · Top Rated</div>
+                <div class="game-sub">★★★★★ 4.8</div>
                 <div class="game-pay">💰 $26/hr</div>
             </div>
         </div>
-
         <div class="steps">
-            <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text">Sign up <strong>(select 21+)</strong></div>
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text">Play games & complete tasks</div>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text">Withdraw via PayPal, Visa, Crypto</div>
-            </div>
+            <div class="step"><div class="step-num">1</div><div class="step-text">Sign up <strong>(21+)</strong></div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text">Play games & tasks</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text">Withdraw PayPal/Visa/Crypto</div></div>
         </div>
     </div>
-
     <div class="btns">
-        <button class="btn btn-g" onclick="openModal()">
+        <button class="dl-btn btn-google" onclick="openModal()">
             <img src="https://i.imgur.com/FsRNL2q.png" alt="">
-            <div class="btn-txt">
-                <span class="sm">Get it on</span>
-                <span class="lg">Google Play</span>
-            </div>
+            <div class="btn-txt"><span class="sm">Get it on</span><span class="lg">Google Play</span></div>
         </button>
-        <button class="btn btn-a" onclick="openModal()">
+        <button class="dl-btn btn-apple" onclick="openModal()">
             <img src="https://i.imgur.com/odFJO0L.png" alt="">
-            <div class="btn-txt">
-                <span class="sm">Download on</span>
-                <span class="lg">App Store</span>
-            </div>
+            <div class="btn-txt"><span class="sm">Download</span><span class="lg">App Store</span></div>
         </button>
     </div>
-
-    <p class="foot">Results vary. Not guaranteed.</p>
-
+    <p class="foot">Results vary.</p>
 </div>
-
-<!-- Modal -->
 <div class="overlay" id="overlay" onclick="overlayClick(event)">
     <div class="modal">
         <button class="modal-x" onclick="closeModal()">✕</button>
         <div class="modal-icon">💡</div>
-        <div class="modal-tag">Quick Tip</div>
+        <div class="modal-tag">Tip</div>
         <h2>Select 21+ at signup</h2>
-        <p>Unlocks the highest-paying offers. Don't skip this step.</p>
+        <p>Unlocks top offers.</p>
         <button class="modal-cta" onclick="goToOffer()">Got it →</button>
     </div>
 </div>
-
 <script>
     // ═══════ URL PARAM PASSTHROUGH + BROWSER BREAK ═══════
     const appendUrlParams = (baseUrl) => {
@@ -462,39 +166,20 @@
     }
 
     // ═══════ NOTIFICATIONS ═══════
-    const flags = ['🇺🇸','🇺🇸','🇺🇸','🇨🇦','🇬🇧','🇦🇺'];
-    const names = ['Jordan P.','Alex M.','Sarah K.','Mike T.','Emma L.','Chris B.','Tyler R.','Jessica W.'];
-
-    const nInner = document.getElementById('notifInner');
-    const nFlag = document.getElementById('nFlag');
-    const nName = document.getElementById('nName');
-    const nAmt = document.getElementById('nAmt');
-
-    function rnd(a) { return a[Math.floor(Math.random()*a.length)]; }
-
-    setInterval(() => {
-        nInner.classList.add('fade');
-        setTimeout(() => {
-            nFlag.textContent = rnd(flags);
-            nName.textContent = rnd(names);
-            nAmt.textContent = '$' + (Math.random()*70+5).toFixed(2);
-            nInner.classList.remove('fade');
-        }, 300);
-    }, 3000);
+    const flags=['🇺🇸','🇺🇸','🇨🇦','🇬🇧'];
+    const names=['Jordan P.','Alex M.','Sarah K.','Mike T.','Emma L.'];
+    const nInner=document.getElementById('notifInner'),nFlag=document.getElementById('nFlag'),nName=document.getElementById('nName'),nAmt=document.getElementById('nAmt');
+    function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+    setInterval(()=>{nInner.classList.add('fade');setTimeout(()=>{nFlag.textContent=rnd(flags);nName.textContent=rnd(names);nAmt.textContent='$'+(Math.random()*70+5).toFixed(2);nInner.classList.remove('fade')},250)},2800);
 
     // ═══════ LIVE COUNT ═══════
-    let live = 1847;
-    setInterval(() => {
-        live += Math.floor(Math.random()*9) - 4;
-        live = Math.max(1800, Math.min(1950, live));
-        document.getElementById('liveCount').textContent = live.toLocaleString();
-    }, 3800);
+    let live=1847;
+    setInterval(()=>{live+=Math.floor(Math.random()*9)-4;live=Math.max(1800,Math.min(1950,live));document.getElementById('liveCount').textContent=live.toLocaleString()},3500);
 
     // ═══════ MODAL ═══════
-    function openModal() { document.getElementById('overlay').classList.add('open'); }
-    function closeModal() { document.getElementById('overlay').classList.remove('open'); }
-    function overlayClick(e) { if (e.target.id === 'overlay') closeModal(); }
+    function openModal(){document.getElementById('overlay').classList.add('open')}
+    function closeModal(){document.getElementById('overlay').classList.remove('open')}
+    function overlayClick(e){if(e.target.id==='overlay')closeModal()}
 </script>
-
 </body>
 </html>
