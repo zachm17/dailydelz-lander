@@ -18,11 +18,13 @@ body{
 background:var(--bg);color:var(--tx);
 font-family:'Inter',-apple-system,sans-serif;
 min-height:100vh;display:flex;flex-direction:column;align-items:center;
-overflow-x:hidden;padding-bottom:280px
+overflow-x:hidden;padding-bottom:220px
 }
 .glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
 .glow-1{width:600px;height:400px;background:rgba(34,197,94,0.06);top:-80px;left:50%;transform:translateX(-50%)}
 .glow-2{width:280px;height:280px;background:rgba(34,197,94,0.04);bottom:160px;right:-80px}
+
+/* TICKER */
 .ticker{
 width:100%;
 background:linear-gradient(90deg,rgba(34,197,94,0.06),rgba(34,197,94,0.03));
@@ -45,6 +47,8 @@ background:rgba(34,197,94,0.12);color:var(--gb);
 font-size:9.5px;font-weight:700;padding:2px 8px;
 border-radius:20px;border:1px solid rgba(34,197,94,0.2)
 }
+
+/* PAGE */
 .page{width:100%;max-width:430px;padding:18px 14px 20px;position:relative;z-index:1}
 .up{opacity:0;transform:translateY(20px);animation:up .55s ease forwards}
 @keyframes up{to{opacity:1;transform:none}}
@@ -54,6 +58,8 @@ border-radius:20px;border:1px solid rgba(34,197,94,0.2)
 .up:nth-child(4){animation-delay:.33s}
 .up:nth-child(5){animation-delay:.40s}
 .up:nth-child(6){animation-delay:.47s}
+
+/* HERO */
 .hero{
 background:linear-gradient(160deg,#0f1f14 0%,#0a130d 100%);
 border:1px solid rgba(34,197,94,0.18);
@@ -100,8 +106,19 @@ background:linear-gradient(135deg,#4ade80,#22c55e);
 }
 .hero-sub{
 font-size:14px;color:var(--mu);line-height:1.75;
-margin:14px 0 22px;max-width:285px;position:relative;z-index:1
+margin:14px 0 18px;max-width:285px;position:relative;z-index:1
 }
+/* Payout methods inline in hero */
+.hero-methods{
+display:flex;align-items:center;gap:6px;
+margin-bottom:18px;position:relative;z-index:1
+}
+.hero-method{
+display:flex;align-items:center;gap:4px;
+background:rgba(255,255,255,0.04);border:1px solid var(--b);
+border-radius:20px;padding:4px 10px;font-size:11px;color:var(--m2);font-weight:600
+}
+.hero-method .hm-i{font-size:13px}
 .live-badge{
 display:inline-flex;align-items:center;gap:9px;
 background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.18);
@@ -113,6 +130,8 @@ position:relative;z-index:1
 .dot-ring{width:9px;height:9px;background:var(--gb);border-radius:50%;position:absolute;animation:ping 2s ease-out infinite;opacity:.5}
 @keyframes ping{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.8);opacity:0}}
 .lc{color:#fff;font-weight:800}
+
+/* STATS */
 .stats{display:flex;gap:8px;margin-bottom:12px}
 .stat{
 flex:1;background:var(--c1);border:1px solid var(--bb);
@@ -121,69 +140,49 @@ border-radius:18px;padding:14px 8px;text-align:center
 .sval{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;margin-bottom:3px}
 .sval span{color:var(--gb)}
 .slbl{font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--mu);text-transform:uppercase}
-.offer-card{
-background:var(--c1);border:1px solid var(--bb);
-border-radius:26px;padding:0;margin-bottom:12px;
+
+/* PRO TIP BANNER (inline 21+ tip) */
+.tip-banner{
+background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.03));
+border:1px solid rgba(251,191,36,0.2);
+border-radius:16px;padding:12px 16px;
+margin-bottom:12px;
+display:flex;align-items:center;gap:12px;
 position:relative;overflow:hidden
 }
-.offer-card::before{
+.tip-banner::before{
 content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,0.09),transparent)
+background:linear-gradient(90deg,transparent,rgba(251,191,36,0.5),transparent)
 }
-.offer-banner{
-width:100%;height:140px;position:relative;overflow:hidden;
-background:linear-gradient(135deg,#1a0a2e,#2d1060,#0f2d1a);
+.tip-icon{
+width:36px;height:36px;border-radius:10px;
+background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.2);
+display:flex;align-items:center;justify-content:center;
+font-size:16px;flex-shrink:0
 }
-.offer-banner-img{
-width:100%;height:100%;object-fit:cover;object-position:center top;
-opacity:.55
+.tip-text{flex:1}
+.tip-text .tip-label{font-size:9px;font-weight:800;letter-spacing:2px;color:#fbbf24;text-transform:uppercase;margin-bottom:2px}
+.tip-text p{font-size:12.5px;color:var(--m2);line-height:1.5}
+.tip-text p strong{color:#fff;font-weight:700}
+
+/* URGENCY BANNER */
+.urgency-bar{
+background:var(--c1);border:1px solid var(--bb);
+border-radius:14px;padding:10px 16px;
+margin-bottom:12px;
+display:flex;align-items:center;justify-content:space-between
 }
-.offer-banner-overlay{
-position:absolute;inset:0;
-background:linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(7,8,10,0.85))
+.urgency-left{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--m2)}
+.urgency-left .u-icon{font-size:14px}
+.urgency-left strong{color:#fff}
+.urgency-right{
+font-size:11px;font-weight:800;color:#f97316;
+display:flex;align-items:center;gap:5px
 }
-.offer-banner-text{
-position:absolute;bottom:14px;left:18px;right:18px;
-display:flex;align-items:flex-end;justify-content:space-between
-}
-.offer-name{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-.offer-badge{
-background:linear-gradient(135deg,var(--g),var(--gd));
-color:#000;font-size:11px;font-weight:800;
-padding:5px 12px;border-radius:20px;
-box-shadow:0 2px 12px rgba(34,197,94,.4)
-}
-.offer-body{padding:20px 20px 22px}
-.offer-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.dice-icon{
-width:70px;height:70px;border-radius:18px;object-fit:cover;
-border:2px solid rgba(34,197,94,0.3);flex-shrink:0;
-box-shadow:0 4px 20px rgba(0,0,0,.5),0 0 0 4px rgba(34,197,94,0.07)
-}
-.offer-meta{flex:1}
-.offer-meta .title{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px}
-.offer-stars{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--m2)}
-.offer-stars .os{color:var(--gb);font-size:11px}
-.offer-stars strong{color:#fff}
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--bb),transparent);margin-bottom:18px}
-.hiw-label{font-size:9.5px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase;margin-bottom:14px}
-.steps{display:flex;flex-direction:column;gap:10px}
-.step{
-display:flex;align-items:center;gap:13px;
-background:rgba(255,255,255,0.025);border:1px solid var(--b);
-border-radius:14px;padding:11px 14px;
-transition:background .2s,border .2s
-}
-.step:hover{background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.15)}
-.snum{
-width:27px;height:27px;border-radius:8px;
-background:linear-gradient(135deg,var(--g),var(--gd));
-color:#000;font-size:12px;font-weight:900;
-display:flex;align-items:center;justify-content:center;flex-shrink:0;
-box-shadow:0 2px 8px rgba(34,197,94,.3)
-}
-.stxt{font-size:13.5px;color:#ddd;font-weight:500}
-.stxt strong{color:#fff}
+.urgency-dot{width:6px;height:6px;border-radius:50%;background:#f97316;animation:urgpulse 1.5s ease-in-out infinite}
+@keyframes urgpulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* PAYOUT PROGRESS CARD */
 .payout-card{
 background:linear-gradient(160deg,#0f1f14,#0a130d);
 border:1px solid rgba(34,197,94,0.22);
@@ -216,37 +215,29 @@ box-shadow:0 0 20px rgba(34,197,94,0.15)
 .prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .prog-label-left{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase}
 .prog-label-right{font-size:11px;font-weight:800;color:var(--gb)}
-.prog-track{
-height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden
-}
+.prog-track{height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden}
 .prog-fill{
-height:100%;width:50%;
+height:100%;width:0%;
 background:linear-gradient(90deg,#22c55e,#4ade80);
 border-radius:99px;
 box-shadow:0 0 10px rgba(34,197,94,0.5);
-transition:width 1s cubic-bezier(.22,1,.36,1)
+transition:width .8s cubic-bezier(.22,1,.36,1)
 }
 .pc-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;position:relative;z-index:1}
 .pc-step{
 display:flex;align-items:center;gap:14px;
 background:rgba(255,255,255,0.03);border:1px solid var(--b);
 border-radius:16px;padding:13px 14px;
-transition:all .2s
+transition:all .4s
 }
-.pc-step.done{
-background:rgba(34,197,94,0.06);
-border-color:rgba(34,197,94,0.2)
-}
+.pc-step.done{background:rgba(34,197,94,0.06);border-color:rgba(34,197,94,0.2)}
 .pc-step-icon{
 width:40px;height:40px;border-radius:12px;
 background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
 display:flex;align-items:center;justify-content:center;
 font-size:18px;flex-shrink:0;position:relative
 }
-.pc-step.done .pc-step-icon{
-background:rgba(34,197,94,0.1);
-border-color:rgba(34,197,94,0.25)
-}
+.pc-step.done .pc-step-icon{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25)}
 .check-badge{
 position:absolute;top:-5px;right:-5px;
 width:16px;height:16px;border-radius:50%;
@@ -254,8 +245,10 @@ background:var(--g);
 display:flex;align-items:center;justify-content:center;
 font-size:8px;color:#000;font-weight:900;
 border:2px solid #0a130d;
-box-shadow:0 0 8px rgba(34,197,94,.5)
+box-shadow:0 0 8px rgba(34,197,94,.5);
+opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.34,1.56,.64,1)
 }
+.pc-step.done .check-badge{opacity:1;transform:scale(1)}
 .pc-step-body{flex:1;min-width:0}
 .pc-step-body .ps-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
 .pc-step-body .ps-sub{font-size:11.5px;color:var(--mu)}
@@ -264,10 +257,7 @@ font-size:11px;font-weight:800;
 padding:5px 11px;border-radius:20px;
 flex-shrink:0;white-space:nowrap
 }
-.badge-free{
-background:rgba(255,255,255,0.07);
-color:#fff;border:1px solid rgba(255,255,255,0.12)
-}
+.badge-free{background:rgba(255,255,255,0.07);color:#fff;border:1px solid rgba(255,255,255,0.12)}
 .badge-earn{
 background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.08));
 color:var(--gb);border:1px solid rgba(34,197,94,0.3);
@@ -283,10 +273,7 @@ transition:all .25s;
 box-shadow:0 6px 28px rgba(34,197,94,.4),0 2px 0 rgba(255,255,255,.15) inset;
 letter-spacing:-.3px
 }
-.pc-cta:hover{
-box-shadow:0 10px 40px rgba(34,197,94,.55);
-transform:translateY(-2px)
-}
+.pc-cta:hover{box-shadow:0 10px 40px rgba(34,197,94,.55);transform:translateY(-2px)}
 .pc-cta:active{transform:scale(.98)}
 .pc-cta .arrow{
 width:28px;height:28px;border-radius:50%;
@@ -298,30 +285,45 @@ font-size:13px;flex-shrink:0
 display:flex;align-items:center;justify-content:center;
 gap:4px;margin-top:13px;flex-wrap:wrap;position:relative;z-index:1
 }
-.trust-item{
-display:flex;align-items:center;gap:4px;
-font-size:10.5px;color:var(--mu);font-weight:600
-}
+.trust-item{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--mu);font-weight:600}
 .trust-item .ti-icon{font-size:11px}
 .trust-sep{color:rgba(255,255,255,0.1);font-size:11px}
-.pay-card{
+
+/* SOCIAL PROOF */
+.proof-card{
 background:var(--c1);border:1px solid var(--bb);
 border-radius:22px;padding:18px 18px;margin-bottom:12px
 }
-.pay-label{font-size:9.5px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase;margin-bottom:14px}
-.pay-row{display:flex;gap:8px}
-.pay-item{
-flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--b);
-border-radius:13px;padding:11px 6px;text-align:center;
-font-size:11px;font-weight:600;color:var(--m2);
-display:flex;flex-direction:column;align-items:center;gap:5px
+.proof-label{font-size:9.5px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase;margin-bottom:14px}
+.proof-items{display:flex;flex-direction:column;gap:10px}
+.proof-item{
+background:rgba(255,255,255,0.025);border:1px solid var(--b);
+border-radius:14px;padding:12px 14px;
+display:flex;flex-direction:column;gap:6px
 }
-.pay-item .pi{font-size:19px}
+.proof-top{display:flex;align-items:center;justify-content:space-between}
+.proof-user{display:flex;align-items:center;gap:8px}
+.proof-avatar{
+width:28px;height:28px;border-radius:50%;
+background:linear-gradient(135deg,rgba(34,197,94,0.2),rgba(34,197,94,0.05));
+border:1px solid rgba(34,197,94,0.2);
+display:flex;align-items:center;justify-content:center;
+font-size:12px;font-weight:800;color:var(--gb)
+}
+.proof-name{font-size:12px;font-weight:700;color:#fff}
+.proof-stars{font-size:10px;color:var(--gb);letter-spacing:1px}
+.proof-text{font-size:12px;color:var(--m2);line-height:1.55;font-style:italic}
+.proof-meta{font-size:10px;color:var(--mu);display:flex;align-items:center;gap:6px}
+.proof-verified{color:var(--gb);font-weight:700;display:flex;align-items:center;gap:3px}
+
+/* DISCLAIMER */
 .disclaimer{font-size:10px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.8;margin:4px 0 10px;padding:0 6px}
 .flinks{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px}
 .flinks a{color:var(--mu);font-size:12px;text-decoration:none;transition:color .2s}
 .flinks a:hover{color:var(--gb)}
 .fdot{color:rgba(255,255,255,0.1)}
+
+/* STICKY */
 .sticky{
 position:fixed;bottom:0;left:0;right:0;z-index:100;
 padding:14px 14px 18px;
@@ -337,7 +339,12 @@ animation:su .5s cubic-bezier(.22,1,.36,1) both;animation-delay:.6s
 .s-prog-label{font-size:10px;color:var(--mu);font-weight:600;letter-spacing:.3px}
 .s-prog-frac{font-size:10px;font-weight:800;color:var(--gb)}
 .s-prog-track{height:3px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;margin-bottom:11px}
-.s-prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:99px;box-shadow:0 0 8px rgba(34,197,94,.5)}
+.s-prog-fill{
+height:100%;width:0%;
+background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:99px;
+box-shadow:0 0 8px rgba(34,197,94,.5);
+transition:width .8s cubic-bezier(.22,1,.36,1)
+}
 .s-cta{
 width:100%;
 background:linear-gradient(135deg,#22c55e,#16a34a);
@@ -360,105 +367,39 @@ font-size:13px;flex-shrink:0
 .s-ti{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mu);font-weight:600}
 .s-ti .i{font-size:11px}
 .s-sep{color:rgba(255,255,255,0.1);font-size:10px}
-.overlay{
-position:fixed;inset:0;background:rgba(0,0,0,.87);
-backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-display:flex;align-items:center;justify-content:center;padding:20px;
-z-index:999;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s
-}
-.overlay.open{opacity:1;visibility:visible}
-.overlay.open .modal{transform:scale(1) translateY(0)}
-.modal{
-background:#0f1113;border:1px solid rgba(255,255,255,.1);
-border-radius:28px;padding:32px 26px 26px;max-width:305px;width:100%;
-position:relative;transform:scale(.88) translateY(12px);
-transition:transform .35s cubic-bezier(.34,1.56,.64,1);
-text-align:center;
-box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 0 1px rgba(34,197,94,.1);
-overflow:hidden
-}
-.modal::before{
-content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg,transparent,rgba(34,197,94,.7),transparent)
-}
-.mglow{
-position:absolute;top:-50px;left:50%;transform:translateX(-50%);
-width:200px;height:150px;
-background:radial-gradient(ellipse,rgba(34,197,94,.13) 0%,transparent 70%);
-pointer-events:none
-}
-.mx{
-position:absolute;top:14px;right:14px;width:29px;height:29px;
-background:rgba(255,255,255,.05);border:1px solid var(--b);border-radius:50%;
-color:var(--mu);font-size:12px;cursor:pointer;
-display:flex;align-items:center;justify-content:center;
-transition:all .2s;z-index:2
-}
-.mx:hover{background:rgba(255,255,255,.1);color:#fff}
-.micon{
-width:56px;height:56px;
-background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(34,197,94,.05));
-border:1px solid rgba(34,197,94,.25);border-radius:16px;
-display:flex;align-items:center;justify-content:center;
-margin:0 auto 16px;font-size:24px;position:relative;z-index:1
-}
-.mtag{font-size:10px;font-weight:800;letter-spacing:2.5px;color:var(--gb);text-transform:uppercase;margin-bottom:9px;position:relative;z-index:1}
-.modal h2{font-size:21px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:9px;letter-spacing:-.4px;position:relative;z-index:1}
-.modal p{font-size:13.5px;color:var(--mu);line-height:1.65;margin-bottom:22px;position:relative;z-index:1}
-.mcta{
-width:100%;background:linear-gradient(135deg,#22c55e,#15803d);
-color:#000;border:none;border-radius:13px;
-padding:14px;font-size:15px;font-weight:800;cursor:pointer;
-transition:all .2s;box-shadow:0 4px 20px rgba(34,197,94,.35);
-position:relative;z-index:1;letter-spacing:-.2px
-}
-.mcta:hover{box-shadow:0 6px 28px rgba(34,197,94,.5);transform:translateY(-1px)}
-.mcta:active{transform:scale(.98)}
+
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#1e1e1e;border-radius:4px}
 
 /* ── MOBILE COMPACT ── */
 @media (max-width:480px){
-body{padding-bottom:200px}
+body{padding-bottom:180px}
 .page{padding:12px 10px 14px}
 .ticker{padding:6px 12px;font-size:11px}
 .tbadge{font-size:8.5px;padding:2px 6px}
-
-/* Hero */
 .hero{border-radius:22px;padding:18px 16px 18px}
 .fc-logo-wrap{width:52px;height:52px;border-radius:15px;margin-bottom:10px}
 .fc-logo{width:32px;height:32px}
 .star-row{padding:4px 10px;font-size:10.5px;margin-bottom:12px;gap:4px}
 .star-row .s{font-size:9.5px}
 .hero h1{font-size:32px;letter-spacing:-1px}
-.hero-sub{font-size:12.5px;margin:10px 0 16px;max-width:260px;line-height:1.65}
+.hero-sub{font-size:12.5px;margin:10px 0 14px;max-width:260px;line-height:1.65}
+.hero-methods{gap:4px;margin-bottom:14px}
+.hero-method{padding:3px 8px;font-size:10px;gap:3px}
+.hero-method .hm-i{font-size:11px}
 .live-badge{padding:6px 13px;font-size:11px;gap:7px}
-
-/* Stats */
 .stats{gap:6px;margin-bottom:10px}
 .stat{border-radius:14px;padding:10px 6px}
 .sval{font-size:18px;margin-bottom:2px}
 .slbl{font-size:8px;letter-spacing:1.2px}
-
-/* Offer card */
-.offer-card{border-radius:20px;margin-bottom:10px}
-.offer-banner{height:100px}
-.offer-name{font-size:18px}
-.offer-badge{font-size:10px;padding:4px 10px}
-.offer-body{padding:14px 14px 16px}
-.offer-row{gap:10px;margin-bottom:14px}
-.dice-icon{width:52px;height:52px;border-radius:14px}
-.offer-meta .title{font-size:15px;margin-bottom:3px}
-.offer-stars{font-size:11px}
-.offer-stars .os{font-size:10px}
-.hiw-label{font-size:8.5px;margin-bottom:10px}
-.steps{gap:7px}
-.step{padding:9px 11px;border-radius:11px;gap:10px}
-.snum{width:22px;height:22px;border-radius:6px;font-size:10px}
-.stxt{font-size:12px}
-
-/* Payout card */
+.tip-banner{border-radius:13px;padding:10px 12px;margin-bottom:10px;gap:10px}
+.tip-icon{width:30px;height:30px;border-radius:8px;font-size:14px}
+.tip-text .tip-label{font-size:8px}
+.tip-text p{font-size:11.5px}
+.urgency-bar{border-radius:11px;padding:8px 12px;margin-bottom:10px}
+.urgency-left{font-size:11px;gap:6px}
+.urgency-right{font-size:10px}
 .payout-card{border-radius:20px;padding:16px 14px 16px;margin-bottom:10px}
 .pc-head{gap:10px;margin-bottom:14px}
 .pc-coin{width:38px;height:38px;border-radius:11px;font-size:20px}
@@ -479,15 +420,15 @@ body{padding-bottom:200px}
 .trust-row{margin-top:10px;gap:3px}
 .trust-item{font-size:9.5px;gap:3px}
 .trust-item .ti-icon{font-size:10px}
-
-/* Pay card */
-.pay-card{border-radius:18px;padding:14px 14px;margin-bottom:10px}
-.pay-label{font-size:8.5px;margin-bottom:10px}
-.pay-row{gap:6px}
-.pay-item{border-radius:10px;padding:9px 4px;font-size:10px;gap:4px}
-.pay-item .pi{font-size:16px}
-
-/* Sticky */
+.proof-card{border-radius:18px;padding:14px 14px;margin-bottom:10px}
+.proof-label{font-size:8.5px;margin-bottom:10px}
+.proof-items{gap:7px}
+.proof-item{border-radius:11px;padding:10px 12px;gap:5px}
+.proof-avatar{width:24px;height:24px;font-size:10px}
+.proof-name{font-size:11px}
+.proof-stars{font-size:9px}
+.proof-text{font-size:11px}
+.proof-meta{font-size:9px}
 .sticky{padding:10px 12px 14px}
 .s-prog-label{font-size:9px}
 .s-prog-frac{font-size:9px}
@@ -496,14 +437,6 @@ body{padding-bottom:200px}
 .s-cta .s-arrow{width:23px;height:23px;font-size:11px}
 .s-trust{margin-top:8px;gap:3px}
 .s-ti{font-size:9px;gap:3px}
-
-/* Modal */
-.modal{border-radius:22px;padding:24px 20px 20px;max-width:280px}
-.micon{width:44px;height:44px;border-radius:13px;font-size:20px;margin-bottom:12px}
-.mtag{font-size:9px;margin-bottom:7px}
-.modal h2{font-size:18px;margin-bottom:7px}
-.modal p{font-size:12px;margin-bottom:18px}
-.mcta{border-radius:11px;padding:12px;font-size:13.5px}
 }
 </style>
 </head>
@@ -512,18 +445,20 @@ body{padding-bottom:200px}
 <div class="glow glow-1"></div>
 <div class="glow glow-2"></div>
 
+<!-- TICKER -->
 <div class="ticker">
 <div class="ti" id="ti">
 <span id="tf">🇺🇸</span>
 <span class="tname" id="tn">Jordan P.</span>
 <span style="color:#374151">just earned</span>
-<span class="tamt" id="ta">$14.22</span>
+<span class="tamt" id="ta">$18.40</span>
 <span class="tbadge">✓ Paid instantly</span>
 </div>
 </div>
 
 <div class="page">
 
+<!-- HERO -->
 <div class="hero up">
 <div class="fc-logo-wrap">
 <img src="https://i.imgur.com/jFKnFwK.png" alt="Freecash" class="fc-logo"
@@ -539,8 +474,15 @@ onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'f
 </div>
 <h1>Earn cash<br><em>playing games</em></h1>
 <p class="hero-sub">
-Play games, complete offers, cash out instantly via PayPal, Visa, or crypto. Zero investment required.
+Play games, complete offers, and cash out instantly. Zero investment required.
 </p>
+<!-- Payout methods moved inline -->
+<div class="hero-methods">
+<div class="hero-method"><span class="hm-i">💳</span>PayPal</div>
+<div class="hero-method"><span class="hm-i">💵</span>Visa</div>
+<div class="hero-method"><span class="hm-i">₿</span>Crypto</div>
+<div class="hero-method"><span class="hm-i">🎮</span>Gift Cards</div>
+</div>
 <div class="live-badge">
 <div class="dot-wrap">
 <div class="dot-ring"></div>
@@ -550,6 +492,7 @@ Play games, complete offers, cash out instantly via PayPal, Visa, or crypto. Zer
 </div>
 </div>
 
+<!-- STATS -->
 <div class="stats up">
 <div class="stat">
 <div class="sval">$50<span>M+</span></div>
@@ -565,7 +508,29 @@ Play games, complete offers, cash out instantly via PayPal, Visa, or crypto. Zer
 </div>
 </div>
 
-<div class="payout-card up">
+<!-- INLINE 21+ TIP -->
+<div class="tip-banner up">
+<div class="tip-icon">💡</div>
+<div class="tip-text">
+<div class="tip-label">Pro Tip</div>
+<p><strong>Select age 21+</strong> when signing up to unlock the highest-paying game offers</p>
+</div>
+</div>
+
+<!-- URGENCY -->
+<div class="urgency-bar up">
+<div class="urgency-left">
+<span class="u-icon">🎯</span>
+<span>Today's Top Offer: <strong>Dice Dreams</strong></span>
+</div>
+<div class="urgency-right">
+<div class="urgency-dot"></div>
+<span id="spots-count">47 spots left</span>
+</div>
+</div>
+
+<!-- PAYOUT PROGRESS CARD -->
+<div class="payout-card up" id="payout-card">
 <div class="pc-head">
 <div class="pc-coin">💰</div>
 <div class="pc-head-text">
@@ -589,6 +554,7 @@ Play games, complete offers, cash out instantly via PayPal, Visa, or crypto. Zer
 <div class="pc-step-icon" id="pcs1-icon">
 <img src="https://i.imgur.com/jFKnFwK.png" width="22" height="22" style="object-fit:contain;border-radius:6px"
 onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:900;color:#22c55e\'>FC</span>'">
+<div class="check-badge">✓</div>
 </div>
 <div class="pc-step-body">
 <div class="ps-title">Sign Up on Freecash</div>
@@ -597,7 +563,10 @@ onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:900;color:#22c
 <div class="pc-step-badge badge-free">FREE</div>
 </div>
 <div class="pc-step" id="pcs2">
-<div class="pc-step-icon" id="pcs2-icon">⚡</div>
+<div class="pc-step-icon" id="pcs2-icon">
+⚡
+<div class="check-badge">✓</div>
+</div>
 <div class="pc-step-body">
 <div class="ps-title">Start 1 Offer</div>
 <div class="ps-sub">Takes ~5 mins · instantly unlocks earnings</div>
@@ -606,7 +575,7 @@ onerror="this.outerHTML='<span style=\'font-size:18px;font-weight:900;color:#22c
 </div>
 </div>
 
-<button class="pc-cta" onclick="openModal()">
+<button class="pc-cta" onclick="goAff()">
 Start Earning — Sign Up Free
 <div class="arrow">→</div>
 </button>
@@ -620,54 +589,52 @@ Start Earning — Sign Up Free
 </div>
 </div>
 
-<div class="offer-card up">
-<div class="offer-banner">
-<img src="https://i.imgur.com/Tr2oUoZ.jpeg" alt="Dice Dreams" class="offer-banner-img">
-<div class="offer-banner-overlay"></div>
-<div class="offer-banner-text">
-<div class="offer-name">Dice Dreams</div>
-<div class="offer-badge">🎲 Top Offer</div>
+<!-- SOCIAL PROOF -->
+<div class="proof-card up">
+<div class="proof-label">What users are saying</div>
+<div class="proof-items">
+<div class="proof-item">
+<div class="proof-top">
+<div class="proof-user">
+<div class="proof-avatar">S</div>
+<span class="proof-name">Sarah K.</span>
+</div>
+<span class="proof-stars">★★★★★</span>
+</div>
+<div class="proof-text">"Cashed out $147 in my first week. The game offers actually pay well if you stick with them."</div>
+<div class="proof-meta">
+<span class="proof-verified">✓ Verified user</span>
+<span>· Earned $2,100+</span>
 </div>
 </div>
-<div class="offer-body">
-<div class="offer-row">
-<img src="https://i.imgur.com/Tr2oUoZ.jpeg" alt="Dice Dreams Icon" class="dice-icon">
-<div class="offer-meta">
-<div class="title">Dice Dreams</div>
-<div class="offer-stars">
-<span class="os">★★★★★</span>
-<strong>4.8</strong>
-<span style="color:rgba(255,255,255,0.12)">·</span>
-<span>Free to play</span>
+<div class="proof-item">
+<div class="proof-top">
+<div class="proof-user">
+<div class="proof-avatar">M</div>
+<span class="proof-name">Marcus T.</span>
+</div>
+<span class="proof-stars">★★★★★</span>
+</div>
+<div class="proof-text">"PayPal hit my account in under 5 minutes. Didn't expect it to be that fast honestly."</div>
+<div class="proof-meta">
+<span class="proof-verified">✓ Verified user</span>
+<span>· Earned $1,800+</span>
 </div>
 </div>
+<div class="proof-item">
+<div class="proof-top">
+<div class="proof-user">
+<div class="proof-avatar">J</div>
+<span class="proof-name">Jordan R.</span>
 </div>
-<div class="divider"></div>
-<div class="hiw-label">How to earn</div>
-<div class="steps">
-<div class="step">
-<div class="snum">1</div>
-<div class="stxt">Sign up on Freecash — <strong>select age 21+</strong></div>
+<span class="proof-stars">★★★★☆</span>
 </div>
-<div class="step">
-<div class="snum">2</div>
-<div class="stxt">Play games &amp; complete tasks</div>
-</div>
-<div class="step">
-<div class="snum">3</div>
-<div class="stxt">Withdraw via <strong>PayPal, Visa, or Crypto</strong></div>
+<div class="proof-text">"Started doing this on my lunch breaks and it actually adds up. Withdrew to my Visa card twice already this month."</div>
+<div class="proof-meta">
+<span class="proof-verified">✓ Verified user</span>
+<span>· Earned $1,400+</span>
 </div>
 </div>
-</div>
-</div>
-
-<div class="pay-card up">
-<div class="pay-label">Withdrawal Methods</div>
-<div class="pay-row">
-<div class="pay-item"><span class="pi">💳</span>PayPal</div>
-<div class="pay-item"><span class="pi">💵</span>Visa</div>
-<div class="pay-item"><span class="pi">₿</span>Crypto</div>
-<div class="pay-item"><span class="pi">🎮</span>Gift Cards</div>
 </div>
 </div>
 
@@ -683,16 +650,17 @@ and depend on individual participation. This page contains affiliate links.
 
 </div>
 
+<!-- STICKY BAR -->
 <div class="sticky">
 <div class="sticky-inner">
 <div class="s-prog-row">
 <span class="s-prog-label">YOUR PROGRESS</span>
-<span class="s-prog-frac">0 / 2 complete</span>
+<span class="s-prog-frac" id="s-prog-frac">0 / 2 complete</span>
 </div>
 <div class="s-prog-track">
-<div class="s-prog-fill" style="width:0%"></div>
+<div class="s-prog-fill" id="s-prog-fill" style="width:0%"></div>
 </div>
-<button class="s-cta" onclick="openModal()">
+<button class="s-cta" onclick="goAff()">
 Start Earning — Sign Up Free
 <div class="s-arrow">→</div>
 </button>
@@ -706,19 +674,8 @@ Start Earning — Sign Up Free
 </div>
 </div>
 
-<div class="overlay" id="ov" onclick="ovClick(event)">
-<div class="modal" id="modal">
-<div class="mglow"></div>
-<button class="mx" onclick="closeModal()">✕</button>
-<div class="micon">💡</div>
-<div class="mtag">Pro Tip</div>
-<h2>Select 21+ when signing up</h2>
-<p>This unlocks the highest-paying game offers on Freecash — including Dice Dreams. Don't skip it or you'll leave money on the table.</p>
-<button class="mcta" onclick="goAff()">Start Earning Now →</button>
-</div>
-</div>
-
 <script>
+// ═══════ URL PARAM PASSTHROUGH + BROWSER BREAK ═══════
 const appendUrlParams = (baseUrl) => {
 const params = window.location.search;
 if (!params) return baseUrl;
@@ -739,23 +696,55 @@ window.location.href = url.replace(/^https:\/\//, 'x-safari-https://');
 };
 
 function goToOffer() {
-const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4Mzk5MzQ4ODcxOH0?s4=july-lander';
+const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4Mzk5MzQ4ODcxOH0?s4=new-jul-cld';
 const finalUrl = appendUrlParams(baseUrl);
 breakToNativeBrowser(finalUrl);
 }
-
 function goAff() { goToOffer(); }
 
-function openModal() { document.getElementById('ov').classList.add('open'); }
-function closeModal(){ document.getElementById('ov').classList.remove('open'); }
-function ovClick(e) { if(e.target===document.getElementById('ov')) closeModal(); }
+// ═══════ SCROLL-BASED PROGRESS ═══════
+var progressState = 0; // 0, 1, or 2
+var scrollThresholds = [0.25, 0.55]; // % of page scrolled
 
-window.addEventListener('load', function(){
-setTimeout(function(){
-document.getElementById('prog-fill').style.width = '0%';
-}, 600);
+function updateProgress(newState) {
+if (newState === progressState) return;
+progressState = newState;
+
+var pct = (newState / 2) * 100;
+document.getElementById('prog-fill').style.width = pct + '%';
+document.getElementById('s-prog-fill').style.width = pct + '%';
+document.getElementById('prog-frac').textContent = newState + ' / 2 complete';
+document.getElementById('s-prog-frac').textContent = newState + ' / 2 complete';
+
+// Animate step cards
+if (newState >= 1) {
+document.getElementById('pcs1').classList.add('done');
+} else {
+document.getElementById('pcs1').classList.remove('done');
+}
+if (newState >= 2) {
+document.getElementById('pcs2').classList.add('done');
+} else {
+document.getElementById('pcs2').classList.remove('done');
+}
+}
+
+window.addEventListener('scroll', function() {
+var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+if (docHeight <= 0) return;
+var scrollPct = scrollTop / docHeight;
+
+if (scrollPct >= scrollThresholds[1]) {
+updateProgress(2);
+} else if (scrollPct >= scrollThresholds[0]) {
+updateProgress(1);
+} else {
+updateProgress(0);
+}
 });
 
+// ═══════ LIVE COUNTER ═══════
 var base = 2134;
 setInterval(function(){
 base += Math.floor(Math.random()*9)-4;
@@ -763,11 +752,17 @@ base = Math.max(1950, Math.min(2280, base));
 document.getElementById('lc').textContent = base.toLocaleString();
 }, 3800);
 
+// ═══════ TICKER (tightened amounts $8-$35, weighted middle) ═══════
 var flags = ['🇺🇸','🇺🇸','🇺🇸','🇨🇦','🇬🇧','🇦🇺','🇩🇪','🇳🇱','🇳🇿','🇫🇷'];
 var first = ['Jordan','Alex','Sarah','Mike','Emma','Chris','Tyler','Jessica','Ryan','Ashley','David','Lauren','Kevin','Megan','Brandon','Kayla','Nathan','Dylan','Cody','Jake','Olivia'];
 var last = ['P','M','K','T','L','B','R','W','H','C','N','G','S','F','D'];
 function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
-function rndAmt(){ return '$'+(Math.random()*70+6).toFixed(2); }
+// Weighted toward $12-$22 using averaged randoms
+function rndAmt(){
+var r = (Math.random() + Math.random() + Math.random()) / 3; // bell curve 0-1
+var amt = 8 + r * 27; // $8 to $35, clustered around $21
+return '$' + amt.toFixed(2);
+}
 var tiEl = document.getElementById('ti');
 setInterval(function(){
 tiEl.classList.add('out');
@@ -778,6 +773,15 @@ document.getElementById('ta').textContent = rndAmt();
 tiEl.classList.remove('out');
 }, 360);
 }, 3200);
+
+// ═══════ URGENCY SPOTS COUNTDOWN ═══════
+var spots = 47;
+setInterval(function(){
+if (Math.random() < 0.35 && spots > 12) {
+spots--;
+document.getElementById('spots-count').textContent = spots + ' spots left';
+}
+}, 8000);
 </script>
 </body>
 </html>
