@@ -211,12 +211,6 @@ body{
 .pc-head-text h3{font-size:17px;font-weight:900;color:#fff;margin-bottom:3px;letter-spacing:-.3px}
 .pc-head-text p{font-size:12px;color:var(--mu)}
 .pc-head-text p span{color:var(--gb);font-weight:700}
-.prog-wrap{position:relative;z-index:1;margin-bottom:18px}
-.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.prog-label-left{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--mu);text-transform:uppercase}
-.prog-label-right{font-size:11px;font-weight:800;color:var(--gb)}
-.prog-track{height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden}
-.prog-fill{
   height:100%;width:0%;
   background:linear-gradient(90deg,#22c55e,#4ade80);
   border-radius:99px;
@@ -335,11 +329,6 @@ body{
 }
 @keyframes su{from{transform:translateY(100%);opacity:0}to{transform:none;opacity:1}}
 .sticky-inner{max-width:430px;margin:0 auto}
-.s-prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.s-prog-label{font-size:10px;color:var(--mu);font-weight:600;letter-spacing:.3px}
-.s-prog-frac{font-size:10px;font-weight:800;color:var(--gb)}
-.s-prog-track{height:3px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;margin-bottom:11px}
-.s-prog-fill{
   height:100%;width:0%;
   background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:99px;
   box-shadow:0 0 8px rgba(34,197,94,.5);
@@ -461,10 +450,6 @@ body{
   .pc-coin{width:38px;height:38px;border-radius:11px;font-size:20px}
   .pc-head-text h3{font-size:14px}
   .pc-head-text p{font-size:11px}
-  .prog-wrap{margin-bottom:14px}
-  .prog-label-left{font-size:8px}
-  .prog-label-right{font-size:10px}
-  .prog-track{height:5px}
   .pc-steps{gap:7px;margin-bottom:14px}
   .pc-step{padding:10px 11px;border-radius:13px;gap:10px}
   .pc-step-icon{width:34px;height:34px;border-radius:10px;font-size:15px}
@@ -486,9 +471,6 @@ body{
   .proof-text{font-size:11px}
   .proof-meta{font-size:9px}
   .sticky{padding:10px 12px 14px}
-  .s-prog-label{font-size:9px}
-  .s-prog-frac{font-size:9px}
-  .s-prog-track{margin-bottom:8px}
   .s-cta{border-radius:13px;padding:12px 16px;font-size:14px;gap:8px}
   .s-cta .s-arrow{width:23px;height:23px;font-size:11px}
   .s-trust{margin-top:8px;gap:3px}
@@ -601,16 +583,6 @@ body{
       </div>
     </div>
 
-    <div class="prog-wrap">
-      <div class="prog-label">
-        <span class="prog-label-left">Your Progress</span>
-        <span class="prog-label-right" id="prog-frac">0 / 2 complete</span>
-      </div>
-      <div class="prog-track">
-        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
-      </div>
-    </div>
-
     <div class="pc-steps">
       <div class="pc-step" id="pcs1">
         <div class="pc-step-icon" id="pcs1-icon">
@@ -715,12 +687,6 @@ body{
 <!-- STICKY BAR -->
 <div class="sticky">
   <div class="sticky-inner">
-    <div class="s-prog-row">
-      <span class="s-prog-label">YOUR PROGRESS</span>
-      <span class="s-prog-frac" id="s-prog-frac">0 / 2 complete</span>
-    </div>
-    <div class="s-prog-track">
-      <div class="s-prog-fill" id="s-prog-fill" style="width:0%"></div>
     </div>
     <button class="s-cta" onclick="openModal()">
       Start Earning — Sign Up Free
@@ -771,7 +737,7 @@ body{
   };
 
   function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4NDIyNzcyNTk1NX0?s4=july-land-new';
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4NDMzMjM1MTcyNn0?s4=new-land';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
   }
@@ -782,19 +748,7 @@ body{
   function ovClick(e)  { if(e.target===document.getElementById('ov')) closeModal(); }
 
   // ═══════ SCROLL-BASED PROGRESS ═══════
-  var progressState = 0; // 0, 1, or 2
-  var scrollThresholds = [0.25, 0.55]; // % of page scrolled
-
-  function updateProgress(newState) {
-    if (newState === progressState) return;
-    progressState = newState;
-    
     var pct = (newState / 2) * 100;
-    document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('s-prog-fill').style.width = pct + '%';
-    document.getElementById('prog-frac').textContent = newState + ' / 2 complete';
-    document.getElementById('s-prog-frac').textContent = newState + ' / 2 complete';
-
     // Animate step cards
     if (newState >= 1) {
       document.getElementById('pcs1').classList.add('done');
@@ -807,22 +761,9 @@ body{
       document.getElementById('pcs2').classList.remove('done');
     }
   }
-
   window.addEventListener('scroll', function() {
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight <= 0) return;
-    var scrollPct = scrollTop / docHeight;
-
-    if (scrollPct >= scrollThresholds[1]) {
-      updateProgress(2);
-    } else if (scrollPct >= scrollThresholds[0]) {
-      updateProgress(1);
     } else {
-      updateProgress(0);
     }
-  });
-
   // ═══════ LIVE COUNTER ═══════
   var base = 2134;
   setInterval(function(){
