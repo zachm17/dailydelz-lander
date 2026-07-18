@@ -731,7 +731,7 @@ body{
   };
 
   function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4NDMzMjM1MTcyNn0?s4=new-land';
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4NDMzNjUzMjk0Nn0?s4=newland';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
   }
@@ -741,23 +741,6 @@ body{
   function closeModal(){ document.getElementById('ov').classList.remove('open'); }
   function ovClick(e)  { if(e.target===document.getElementById('ov')) closeModal(); }
 
-  // ═══════ SCROLL-BASED PROGRESS ═══════
-    var pct = (newState / 2) * 100;
-    // Animate step cards
-    if (newState >= 1) {
-      document.getElementById('pcs1').classList.add('done');
-    } else {
-      document.getElementById('pcs1').classList.remove('done');
-    }
-    if (newState >= 2) {
-      document.getElementById('pcs2').classList.add('done');
-    } else {
-      document.getElementById('pcs2').classList.remove('done');
-    }
-  }
-  window.addEventListener('scroll', function() {
-    } else {
-    }
   // ═══════ LIVE COUNTER ═══════
   var base = 2134;
   setInterval(function(){
