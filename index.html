@@ -18,7 +18,7 @@ body{
   background:var(--bg);color:var(--tx);
   font-family:'Inter',-apple-system,sans-serif;
   min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  overflow-x:hidden;padding-bottom:220px
+  overflow-x:hidden;padding-bottom:40px
 }
 .glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
 .glow-1{width:600px;height:400px;background:rgba(34,197,94,0.06);top:-80px;left:50%;transform:translateX(-50%)}
@@ -414,7 +414,7 @@ body{
 
 /* ── MOBILE COMPACT ── */
 @media (max-width:480px){
-  body{padding-bottom:180px}
+  body{padding-bottom:30px}
   .page{padding:12px 10px 14px}
   .ticker{padding:6px 12px;font-size:11px}
   .tbadge{font-size:8.5px;padding:2px 6px}
@@ -546,6 +546,12 @@ body{
       <div class="slbl">To Start</div>
     </div>
   </div>
+
+  <!-- PRIMARY CTA -->
+  <button class="pc-cta up" onclick="openModal()" style="margin-bottom:12px">
+    Start Earning — Sign Up Free
+    <div class="arrow">→</div>
+  </button>
 
   <!-- INLINE 21+ TIP -->
   <div class="tip-banner up">
@@ -679,23 +685,6 @@ body{
 
 </div>
 
-<!-- STICKY BAR -->
-<div class="sticky">
-  <div class="sticky-inner">
-    <button class="s-cta" onclick="openModal()">
-      Start Earning — Sign Up Free
-      <div class="s-arrow">→</div>
-    </button>
-    <div class="s-trust">
-      <div class="s-ti"><span class="i">🔒</span> No cost</div>
-      <span class="s-sep">·</span>
-      <div class="s-ti"><span class="i">⚡</span> Instant payouts</div>
-      <span class="s-sep">·</span>
-      <div class="s-ti"><span class="i">✅</span> No experience needed</div>
-    </div>
-  </div>
-</div>
-
 <!-- MODAL -->
 <div class="overlay" id="ov" onclick="ovClick(event)">
   <div class="modal" id="modal">
@@ -731,7 +720,7 @@ body{
   };
 
   function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpIiwidGlkIjoiYzBiNGIxZWExM2M0ZmNkNWIxNDMiLCJ0cyI6MTc4NDMzNjUzMjk0Nn0?s4=newland';
+      const baseUrl = 'https://glctrk.org/aff_c?offer_id=3532&aff_id=23122';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
   }
